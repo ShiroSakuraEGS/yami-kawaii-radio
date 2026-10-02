@@ -1,50 +1,51 @@
-// 100 個正統日系動漫風格・病態可愛・地雷系純音樂詞庫資料 (Anime Jirai-kei / Menhera / Emo Sad)
+// 🎀💀 正統「日本動漫 × 病態可愛 × 地雷系 × Emo 純音樂」Suno Style Prompt 核心詞庫 (100詞)
+// 哲學架構：地雷美學 → 可愛音色 → 憂鬱和聲 → 微量不協和 → 重複旋律 → 孤獨空間感 → 嚴格無人聲
 const KEYWORDS_DATA = {
-  genres: [
-    "Japanese Anime OST (アニメBGM)", "J-Emo Sadcore (哀愁J-Emo)", "Yami-kawaii Anime Lo-fi (病み可愛い)",
-    "Jirai-kei Melodic Trap (地雷系ビート)", "Vocaloid-Style Piano Ballad (ボカロ風ピアノ)", "Melancholic Anime Ending Theme",
-    "Dark Pastel Chiptune (メンヘラピコピコ)", "Depressive Shoegaze Anime BGM", "Sad Japanese City Pop Lofi",
-    "Tokyo Rainy Midnight Chillhop", "Gothic Lolita Ambient Waltz", "Anime Sad Guitar Trap",
-    "Nostalgic Makoto Shinkai Vibe Soundscape", "Emotional Anime Piano & Violin Solitude", "Slowed + Reverb Anime Aesthetic",
-    "Ethereal Dreamcore Anime Lullaby", "Cyber Shibuya Glitchcore", "Voidwave Anime Heartbreak",
-    "Melodramatic J-Rock Ballad Ambient", "Bitcrushed 8-bit Otaku Melancholy"
+  aesthetics: [
+    "jirai-kei aesthetic", "yami-kawaii", "menhera aesthetic", "dark kawaii",
+    "Japanese anime soundtrack", "melancholic anime OST", "fragile cuteness", "cute but unsettling",
+    "broken doll aesthetic", "porcelain doll aesthetic", "unstable sweetness", "melancholic cuteness",
+    "twisted cuteness", "modern anime aesthetic", "visual novel soundtrack", "anime ending theme",
+    "Japanese indie pop", "lonely girl aesthetic", "doll-like melancholy", "pathological cute"
   ],
-  moods: [
-    "Heartbroken Anime Agony (失恋の悲痛)", "Sweet & Toxic Yandere Obsession (ヤンデレ依存)", "Tears Falling in Tokyo Midnight Rain (雨の東京)",
-    "Menhera Fragile Soul (メンヘラ壊れそうな心)", "Nostalgic Anime Sunset Yearning (夕暮れの郷愁)", "Quiet 4AM Room Dissociation (真夜中の解離)",
-    "Tragic Anime Climax Sadness (切ない結末)", "Crying Under the Cherry Blossoms (桜散る涙)", "Sweet Pink Poison Euphoria (甘い毒の幻覚)",
-    "Hopeless Love Longing (叶わない恋)", "Sleep Deprived Overthinking (不眠の夜)", "Hauntingly Beautiful Anime Grief (儚く美しい哀しみ)",
-    "Cold Hospital Room Solitude (病室の孤独)", "Emotional Numbness in Shibuya (渋谷の空虚)", "Tear-stained Anime Diary (涙で滲んだ日記)",
-    "Broken Porcelain Doll Sadness (壊れた人形)", "Melodramatic Anime Farewell (永遠の別れ)", "Chilly Morning Train Loneliness (冷たい始発列車)",
-    "Delusional Romantic Ache (妄想の胸の痛み)", "Fading Summer Memories (消えゆく夏の記憶)"
+  emotions: [
+    "melancholic", "bittersweet", "emotionally unstable", "obsessive",
+    "fragile", "vulnerable", "anxious", "desperate",
+    "wistful", "nostalgic", "hollow", "numb",
+    "emotionally exhausted", "quietly depressed", "lonely", "lovesick",
+    "heartbroken", "dissociative atmosphere", "existential loneliness", "claustrophobic"
   ],
   instruments: [
-    "Sad Japanese Music Box (切ないオルゴール)", "Emotional Anime Grand Piano (アニソン風哀愁ピアノ)", "Weeping Pizzicato Strings (すすり泣くストリングス)",
-    "Nostalgic Japanese Koto & Celesta (琴とチェレスタ)", "Detuned Felt Piano (くすんだアップライトピアノ)", "Sad Reverb Electric Guitar Riffs (泣きのギター)",
-    "Subdued 808 Sub-bass (重低音トラップベース)", "Toy Glockenspiel & Chimes (おもちゃの鉄琴)", "Tremolo Ambient Harp (震えるハープ)",
-    "Airy Ethereal Anime Synth Pad (儚いシンセパッド)", "Dusty Rhodes Electric Piano (レトロローズピアノ)", "Crying Pitch-bent Synth (哀愁のピッチベンド)",
-    "Raindrop Thumb Kalimba (雨粒カリンバ)", "Muffled Vinyl Kick & Snare (こもったドラム)", "Soft Fingerstyle Acoustic Guitar (切ないアコギ)",
-    "Muted Lo-fi Electric Guitar (静かなローファイギター)", "Vintage Mellotron Flute (メロトロンフルート)", "Distorted Sub-bass Drone (歪んだ暗黒ベース)",
-    "Warm Analog Bassline (温かいベース)", "Gothic Church Bells (ゴシック鐘の音)"
+    "delicate piano", "melancholic piano", "fragile piano", "repetitive piano motif",
+    "slightly dissonant piano", "delicate music box", "broken music box", "eerie music box",
+    "haunting music box", "distorted music box", "clean electric guitar", "shimmering guitar",
+    "dreamy shoegaze guitar", "melancholic guitar", "delicate strings", "subtle cinematic strings",
+    "fragile strings", "dreamy synth pads", "crystalline synth", "digital bells"
   ],
-  textures: [
-    "Tokyo Midnight Raindrop FX (東京の雨音)", "Vintage Anime Cassette Wobble (アニメカセットの揺れ)", "Vinyl Record Crackle & Static (レコードのノイズ)",
-    "Antique Clock Ticking (柱時計のチクタク音)", "Hospital Heart Monitor Beep (心電図のビープ音)", "Pill Bottle Shaking Sound (薬の瓶を振る音)",
-    "Distant Japanese Train Crossing Bell (踏切の警報音)", "Soft Melancholic Breathing Ambience (ため息と吐息)", "Soft Laptop Keyboard Typing (キーボードの打鍵音)",
-    "Wind Chime Tremor in the Breeze (風鈴の揺らめき)", "Neon Light Hum in the Rain (ネオンの微かな唸り)", "Underwater Muffled Resonance (水中のこもり音)",
-    "Bitcrushed 8-bit Glitch Artifacts (グリッチノイズ)", "Distant Tokyo Siren Echo (遠くのサイレン)", "Footsteps in Empty Tokyo Subway (地下鉄の足音)",
-    "Old Radio Frequency Sweeping (ラジオの周波数ノイズ)", "Gentle Tear Drops on Wood (涙が落ちる音)", "Page Turning in Silent Room (本をめくる音)",
-    "Shinjuku Alleyway Atmosphere (新宿裏通りの空気感)", "Shimmer Reverb Tail Decay (儚い残響音)"
+  harmony: [
+    "sweet melody with subtle dissonance", "minor key", "bittersweet chord progression", "unresolved harmony",
+    "unstable harmony", "haunting chord progression", "eerie melodic intervals", "chromatic melody",
+    "repetitive melodic motif", "obsessive melodic motif", "sweet melody", "delicate melody",
+    "innocent melody", "whimsical melody", "descending melody", "dissonant harmony",
+    "unresolved chords", "dark undertones", "music-box-like arpeggios", "tragic anime melody"
   ],
-  rhythm: [
-    "70 BPM Anime Rainy Walk (70 BPM 雨の散歩道)", "Half-time Drowsy Lofi Groove (ハーフタイムの微睡み)", "Sad Melancholic 3/4 Waltz (悲劇のワルツ)",
-    "Stumbling Off-grid Jirai Beat (よろめく地雷ビート)", "68 BPM Midnight Heart Drift (68 BPM 心の彷徨)", "Syncopated J-Emo Pulse (切ないシンコペーション)",
-    "Gentle Anime Lullaby Shuffle (アニメ子守唄シャッフル)", "Hypnotic Downtempo Anime Cadence (催眠的ダウントンポ)", "Mellow Lo-fi Bounce (心地よいローファイバウンス)",
-    "Skipping Heartbeat Cadence (不整脈のようなビート)", "Minimalist Muted Hi-hats (繊細なミュートハイハット)", "Soft Triplet Hi-hat Cascade (三連符のハイハット)",
-    "Ambient Free-tempo Drift (自由な浮遊感)", "Deep Sigh Slow Rhythm (深いため息のリズム)", "Drifting Ghost Notes (彷徨うゴーストノート)",
-    "Distant Slow-motion Rebound (スローモーションのリバウンド)", "Lo-fi Rimshot Accent (ローファイリムショット)", "Gentle Fading Heart Pulse (薄れゆく心拍)",
-    "Melodic J-Trap Slow Groove (哀愁Jトラップ)", "75 BPM Anime Tear Waltz (75 BPM 涙のワルツ)"
+  soundscape: [
+    "intimate nocturnal atmosphere", "bedroom atmosphere", "dreamy ambience", "enclosed atmosphere",
+    "lonely ambience", "spacious reverb", "cold reverb", "emotional soundscape",
+    "slow tempo", "downtempo", "gentle rhythm", "minimal percussion",
+    "restrained drums", "slightly unstable rhythmic accents", "lo-fi textures", "tape warmth",
+    "cassette texture", "subtle glitch", "glitch textures", "subtle digital distortion"
   ]
+};
+
+// 經典病態可愛風格預設組合
+const PROMPT_PRESETS = {
+  sweet_unsettling: "dark kawaii, jirai-kei, yami-kawaii, fragile cuteness, sweet but unsettling, melancholic, delicate, obsessive atmosphere, delicate piano, eerie music box, minor key, sweet melody with subtle dissonance, slow tempo, no vocals",
+  nocturnal_jirai: "jirai-kei, menhera, nocturnal, lonely, fragile, melancholic, emotionally unstable, intimate, dreamy, sparse piano, shimmering guitar, cassette texture, bedroom atmosphere, minimal percussion, no vocals",
+  broken_doll: "broken doll aesthetic, music box, delicate piano, innocent melody, eerie atmosphere, subtle dissonance, melancholic, toy music box, porcelain doll aesthetic, unresolved chords, no vocals",
+  yandere_obsessive: "cute but unsettling, obsessive atmosphere, emotionally intense, sweet melody, dark undertones, unstable harmony, haunting, repetitive piano motif, glitch textures, lovesick, no vocals",
+  anime_ost: "Japanese anime soundtrack, melancholic anime OST, delicate piano, music box, dreamy synth, soft strings, minor key, emotional instrumental, bittersweet chord progression, anime ending rhythm, no vocals",
+  masterpiece: "Jirai-kei, yami-kawaii, menhera, dark kawaii, Japanese anime OST, melancholic instrumental, fragile sweetness, cute but unsettling, delicate piano, broken music box, dreamy synth, shimmering clean guitar, minor key, bittersweet harmony, subtle dissonance, obsessive melodic motif, lonely nocturnal atmosphere, intimate bedroom ambience, slow tempo, minimal percussion, dreamy, fragile, haunting, emotionally unstable, no vocals"
 };
 
 // 預設地雷系動畫背景影片路徑 (Sakura Moriendi Emo)
@@ -696,28 +697,59 @@ function toggleTag(word) {
   updatePrompt();
 }
 
-// 🎀 組裝正統日系動漫風格・病態可愛・地雷系純音樂 Prompt
+// 🎀 組裝正統「日本動漫 × 病態可愛 × 地雷系 × Emo 純音樂」Suno Style Prompt
+// 核心哲學：地雷系美學 → 可愛音色 → 憂鬱和聲 → 微量不協和 → 重複旋律 → 孤獨空間感 → 嚴格無人聲
 function updatePrompt() {
   if (state.selectedTags.size === 0) {
     promptOutput.value = "";
     return;
   }
   const tagsArray = Array.from(state.selectedTags);
-  // 日本動漫風格病態可愛 Emo Sad Prompt 專業公式
-  promptOutput.value = `[Instrumental Japanese Anime OST, Melancholic Anime Background Music], ${tagsArray.join(', ')}, Yami-kawaii aesthetic, Jirai-kei emo atmosphere, tragic anime chords, heart-wrenching nostalgia, Tokyo midnight rain ambience, emotional felt piano, sad weeping strings, [Style: Japanese Anime Emo Lofi / Menhera Sadcore, 70-75 BPM, Pure Instrumental BGM, No Vocals, No Chorus, Highly Atmospheric, 4K Studio Quality Anime Production]`;
+  // 保證結尾含有純音樂排他指示
+  promptOutput.value = `${tagsArray.join(', ')}, instrumental, no vocals`;
 }
 
+// 🎲 一鍵抽卡：按「美學、情緒、音色、和聲、聲場」5 大維度黃金比例抽取
 document.getElementById('randomizeBtn').addEventListener('click', () => {
   state.selectedTags.clear();
-  ['genres', 'moods', 'instruments', 'textures', 'rhythm'].forEach(c => {
+  const categories = ['aesthetics', 'emotions', 'instruments', 'harmony', 'soundscape'];
+  categories.forEach(c => {
     const words = KEYWORDS_DATA[c];
-    state.selectedTags.add(words[Math.floor(Math.random() * words.length)]);
+    if (words && words.length > 0) {
+      state.selectedTags.add(words[Math.floor(Math.random() * words.length)]);
+      // 隨機追加第 2 個詞強化層次
+      if (Math.random() > 0.4) {
+        state.selectedTags.add(words[Math.floor(Math.random() * words.length)]);
+      }
+    }
   });
   renderTags();
   updatePrompt();
-  log(`🎲 抽卡完成！組裝了 ${state.selectedTags.size} 個日系動漫病態可愛關鍵詞。`);
-  showToast("🎲 已為您隨機抽取日系動漫病態可愛 Prompt！");
+  log(`🎲 抽卡完成！組裝了 ${state.selectedTags.size} 個精選病態可愛 Emo 詞彙。`);
+  showToast("🎲 已為您隨機組裝病態可愛地雷系純音樂 Prompt！");
 });
+
+// ⚡ 經典風格預設選單切換
+const presetSelect = document.getElementById('presetSelect');
+if (presetSelect) {
+  presetSelect.addEventListener('change', (e) => {
+    const key = e.target.value;
+    if (!key || !PROMPT_PRESETS[key]) return;
+    promptOutput.value = PROMPT_PRESETS[key];
+    
+    // 自動反向高亮詞庫標籤
+    state.selectedTags.clear();
+    const allWords = Object.values(KEYWORDS_DATA).flat();
+    allWords.forEach(w => {
+      if (PROMPT_PRESETS[key].toLowerCase().includes(w.toLowerCase())) {
+        state.selectedTags.add(w);
+      }
+    });
+    renderTags();
+    log(`⚡ 套用經典風格預設：${e.target.options[e.target.selectedIndex].text}`);
+    showToast(`⚡ 已套用：${e.target.options[e.target.selectedIndex].text}`);
+  });
+}
 
 document.getElementById('clearTagsBtn').addEventListener('click', () => {
   state.selectedTags.clear();

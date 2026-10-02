@@ -37,14 +37,23 @@
 
 ---
 
-### 4. 🎀 100 個精心雕琢的日系動漫風格・病態可愛・地雷系純音樂詞庫 (Anime Jirai-kei / Menhera / Emo Sad)
-- 系統分類為 **5 大核心維度（各 20 個專業動漫與次文化詞彙）**：
-  - **動漫風格流派 (Anime Genres)**：`Japanese Anime OST (アニメBGM)`、`J-Emo Sadcore`、`Yami-kawaii Anime Lo-fi`、`Jirai-kei Melodic Trap`、`Vocaloid-Style Piano Ballad` 等。
-  - **動漫情感意境 (Anime Moods & Agony)**：`Heartbroken Anime Agony`、`Sweet & Toxic Yandere Obsession`、`Tears Falling in Tokyo Midnight Rain`、`Menhera Fragile Soul` 等。
-  - **日系配器音色 (Anime Instruments)**：`Sad Japanese Music Box (切ないオルゴール)`、`Emotional Anime Grand Piano`、`Weeping Pizzicato Strings`、`Nostalgic Koto & Celesta` 等。
-  - **環境音與質地 (Anime Ambience & FX)**：`Tokyo Midnight Raindrop FX`、`Vintage Anime Cassette Wobble`、`Distant Japanese Train Crossing Bell (踏切)`、`Pill Bottle Shaking Sound` 等。
-  - **節奏動態 (Anime Cadence & Groove)**：`70 BPM Anime Rainy Walk`、`Half-time Drowsy Lofi Groove`、`Sad Melancholic 3/4 Waltz`、`Stumbling Off-grid Jirai Beat` 等。
-- 提供「🎲 **一鍵抽卡**」隨機組合，自動組裝出專業級純音樂日系動漫 Emo Prompt（自動注入 `[Instrumental Japanese Anime OST, Melancholic Anime Background Music]` 與純音樂排他標籤）。
+### 4. 🎀 正統「日本動漫 × 病態可愛 × 地雷系 × Emo 純音樂」Suno Style Prompt 詞庫體系
+- **核心哲學**：
+  > **地雷系美學 ➔ 可愛音色 ➔ 憂鬱和聲 ➔ 微量不協和 (Subtle Dissonance) ➔ 重複旋律 (Obsessive Motif) ➔ 孤獨空間感 ➔ 嚴格無人聲**  
+  不是單純堆疊 `dark + cute + sad`，而是營造「**外表看起來很可愛，但音樂裡的精神狀態正在慢慢裂開**」的獨特美感！
+- **5 大核心維度結構（各 20 詞，共 100 詞）**：
+  - **美學風格 (Aesthetics)**：`jirai-kei aesthetic`、`yami-kawaii`、`menhera aesthetic`、`dark kawaii`、`fragile cuteness`、`cute but unsettling`、`broken doll aesthetic`、`Japanese anime soundtrack` 等。
+  - **病態情緒 (Emotions)**：`melancholic`、`bittersweet`、`emotionally unstable`、`obsessive`、`fragile`、`vulnerable`、`anxious`、`dissociative atmosphere`、`existential loneliness` 等。
+  - **音色樂器 (Instruments)**：`delicate piano`、`slightly dissonant piano`、`broken music box`、`eerie music box`、`shimmering guitar`、`dreamy shoegaze guitar`、`delicate strings`、`dreamy synth pads` 等。
+  - **和聲旋律 (Harmony & Dissonance)**：`sweet melody with subtle dissonance`、`minor key`、`bittersweet chord progression`、`unresolved harmony`、`repetitive melodic motif`、`haunting chord progression` 等。
+  - **聲場節奏 (Soundscape & Ambience)**：`intimate nocturnal atmosphere`、`bedroom atmosphere`、`dreamy ambience`、`slow tempo`、`minimal percussion`、`subtle glitch`、`cassette texture` 等。
+- **⚡ 內建 6 大經典病態可愛風格預設 (Presets 一鍵套用)**：
+  - 🍬 **甜美病態型 (Sweet & Unsettling)**：可愛外表下暗藏執念與微量不協和音。
+  - 🌙 **地雷系深夜型 (Nocturnal Jirai)**：深夜臥室、稀疏鋼琴、磁帶微暖與極度孤獨。
+  - 🧸 **玩偶病態型 (Broken Doll)**：破掉的音樂盒、純真旋律與陶瓷娃娃的破碎哀傷。
+  - 🔪 **病嬌執念型 (Yandere Obsessive)**：重複鋼琴動機、神經質小故障音效與窒息式依戀。
+  - 🌸 **純動漫 OST 型 (Melancholic Anime OST)**：如動畫最終話 ED 般的唯美哀傷弦樂。
+  - ✨ **終極地雷系 Emo 裂開感 (Ultimate Jirai Emo)**：全維度交織出的頂級精神狀態漸變純音樂！
 
 ---
 
