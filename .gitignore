@@ -8,3 +8,7 @@ __pycache__/
 Thumbs.db
 *.tmp
 *.log
+
+# Suno API Server Submodule / Dependencies
+suno-api-server/
+node_modules/

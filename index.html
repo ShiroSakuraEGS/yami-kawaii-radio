@@ -26,6 +26,9 @@
         <span class="badge">Crossfade Engine v2.0</span>
       </div>
       <div class="header-links">
+        <button class="btn-main" id="openSunoApiModalBtn" style="padding: 6px 14px; font-size: 0.85rem; background: linear-gradient(135deg, #00f0ff 0%, #b84dff 100%);">
+          <span id="apiStatusDot">⚪</span> 串接真實 Suno API
+        </button>
         <button class="btn-main" id="enterRadioBtn" style="padding: 6px 14px; font-size: 0.85rem;">
           <span>📻</span> 一鍵切換電台展示
         </button>
@@ -422,10 +425,72 @@
 
   <div class="toast" id="toastMsg">通知訊息</div>
 
+  <!-- 🔌 Suno API 串接與測試設定模態框 -->
+  <div class="modal-backdrop" id="sunoApiModal" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title">
+          <span style="color: #00f0ff;">🔌</span> 串接真實 Suno AI API 轉接服務
+        </div>
+        <button class="modal-close-btn" id="closeSunoApiModalBtn">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <p class="modal-desc">
+          本工房支援直連 <code>gcui-art/suno-api</code> 後端。啟動本機伺服器或 Vercel 後，在此填入 API 端點，即可直接透過 Suno 生成真實的 AI 音樂並自動加進電台播放！
+        </p>
+
+        <div class="form-group">
+          <label for="sunoApiBaseUrl">API 伺服器端點 (Base URL)：</label>
+          <input type="text" id="sunoApiBaseUrl" class="text-input" placeholder="例如：http://localhost:3000 或 https://your-suno-api.vercel.app" value="http://localhost:3000">
+          <span class="form-hint">預設為本機 <code>http://localhost:3000</code>，若部署至 Vercel 則填寫 Vercel 產出的網址。</span>
+        </div>
+
+        <div class="form-group">
+          <label for="sunoApiToken">安全金鑰 (可選，Bearer Token)：</label>
+          <input type="password" id="sunoApiToken" class="text-input" placeholder="若伺服器未啟用密鑰保護可留空">
+        </div>
+
+        <div class="form-group-toggle">
+          <label class="toggle-container">
+            <input type="checkbox" id="enableRealSunoToggle">
+            <span class="toggle-slider"></span>
+          </label>
+          <div>
+            <div style="font-weight: 700; color: #fff;">啟用真實 Suno AI 音樂生成模式</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">
+              開啟後，點擊合成或生成按鈕將真正調用 Suno API，並將生成的新歌加入播放清單；關閉時則使用內建原型的示範音軌。
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-actions-row">
+          <button class="btn-main" id="testSunoApiBtn" style="background: linear-gradient(135deg, #00f0ff 0%, #b84dff 100%);">
+            <span>⚡</span> 測試連線並查詢剩餘點數
+          </button>
+          <a href="SUNO_API_TUTORIAL.md" target="_blank" class="btn-link" style="padding: 8px 14px; text-decoration: none;">
+            <span>📖</span> 完整串接教學手冊
+          </a>
+        </div>
+
+        <!-- 測試狀態與點數回饋區 -->
+        <div class="api-test-result" id="apiTestResult" style="display: none;">
+          <div class="result-header" id="resultHeader">連線測試結果</div>
+          <div class="result-content" id="resultContent"></div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-sub" id="cancelSunoApiModalBtn">取消</button>
+        <button class="btn-main" id="saveSunoApiSettingsBtn">💾 儲存並套用設定</button>
+      </div>
+    </div>
+  </div>
+
   <!-- 雙軌 HTML5 Audio 實體 (Deck A & Deck B)，實現專業交錯淡入淡出 -->
   <audio id="audioDeckA" crossorigin="anonymous" preload="auto"></audio>
   <audio id="audioDeckB" crossorigin="anonymous" preload="auto"></audio>
 
-  <script src="app.js?v=20261002_03"></script>
+  <script src="app.js?v=20261002_04"></script>
 </body>
 </html>

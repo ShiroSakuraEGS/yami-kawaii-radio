@@ -101,6 +101,20 @@ const testApiBtn = document.getElementById('testApiBtn');
 const apiStatusDot = document.getElementById('apiStatusDot');
 const apiStatusText = document.getElementById('apiStatusText');
 const creditsDisplay = document.getElementById('creditsDisplay');
+
+// 🔌 Suno API 模態框 DOM 參照
+const openSunoApiModalBtn = document.getElementById('openSunoApiModalBtn');
+const sunoApiModal = document.getElementById('sunoApiModal');
+const closeSunoApiModalBtn = document.getElementById('closeSunoApiModalBtn');
+const cancelSunoApiModalBtn = document.getElementById('cancelSunoApiModalBtn');
+const sunoApiBaseUrl = document.getElementById('sunoApiBaseUrl');
+const sunoApiToken = document.getElementById('sunoApiToken');
+const enableRealSunoToggle = document.getElementById('enableRealSunoToggle');
+const testSunoApiBtn = document.getElementById('testSunoApiBtn');
+const saveSunoApiSettingsBtn = document.getElementById('saveSunoApiSettingsBtn');
+const apiTestResult = document.getElementById('apiTestResult');
+const resultHeader = document.getElementById('resultHeader');
+const resultContent = document.getElementById('resultContent');
 const ffmpegCmd = document.getElementById('ffmpegCmd');
 const overlapSlider = document.getElementById('overlapSlider');
 const overlapSecText = document.getElementById('overlapSecText');
@@ -771,48 +785,242 @@ document.getElementById('copyPromptBtn').addEventListener('click', () => {
   navigator.clipboard.writeText(promptOutput.value).then(() => showToast("📋 已複製 Prompt！"));
 });
 
-testApiBtn.addEventListener('click', async () => {
-  const endpoint = apiEndpointInput.value.trim().replace(/\/$/, "");
-  apiStatusDot.className = "status-dot busy";
-  apiStatusText.textContent = "連線中...";
-  log(`🔄 連線測試：${endpoint}/api/get_limit ...`);
+// 🔌 Suno API 設定持久化與初始化
+function initSunoApiConfig() {
+  const savedUrl = localStorage.getItem('suno_api_url') || 'http://localhost:3000';
+  const savedToken = localStorage.getItem('suno_api_token') || '';
+  const savedEnabled = localStorage.getItem('suno_api_enabled') === 'true';
+
+  if (sunoApiBaseUrl) sunoApiBaseUrl.value = savedUrl;
+  if (apiEndpointInput) apiEndpointInput.value = savedUrl;
+  if (sunoApiToken) sunoApiToken.value = savedToken;
+  if (enableRealSunoToggle) enableRealSunoToggle.checked = savedEnabled;
+
+  updateApiStatusIndicator(savedEnabled);
+}
+
+function updateApiStatusIndicator(enabled) {
+  if (apiStatusDot) {
+    apiStatusDot.textContent = enabled ? "🟢" : "⚪";
+  }
+}
+
+// 模態框開關控制
+if (openSunoApiModalBtn && sunoApiModal) {
+  openSunoApiModalBtn.addEventListener('click', () => {
+    sunoApiModal.style.display = 'flex';
+  });
+}
+
+function closeSunoModal() {
+  if (sunoApiModal) sunoApiModal.style.display = 'none';
+}
+
+if (closeSunoApiModalBtn) closeSunoApiModalBtn.addEventListener('click', closeSunoModal);
+if (cancelSunoApiModalBtn) cancelSunoApiModalBtn.addEventListener('click', closeSunoModal);
+if (sunoApiModal) {
+  sunoApiModal.addEventListener('click', (e) => {
+    if (e.target === sunoApiModal) closeSunoModal();
+  });
+}
+
+// 儲存設定
+if (saveSunoApiSettingsBtn) {
+  saveSunoApiSettingsBtn.addEventListener('click', () => {
+    const url = sunoApiBaseUrl.value.trim().replace(/\/$/, "");
+    const token = sunoApiToken.value.trim();
+    const enabled = enableRealSunoToggle.checked;
+
+    localStorage.setItem('suno_api_url', url);
+    localStorage.setItem('suno_api_token', token);
+    localStorage.setItem('suno_api_enabled', enabled ? 'true' : 'false');
+
+    if (apiEndpointInput) apiEndpointInput.value = url;
+    updateApiStatusIndicator(enabled);
+
+    showToast("💾 已成功儲存 Suno API 設定！");
+    closeSunoModal();
+  });
+}
+
+// 測試連線與查點數核心邏輯
+async function testSunoConnection(endpoint, token) {
+  const cleanEndpoint = endpoint.replace(/\/$/, "");
+  const headers = {};
+  if (token) headers['Authorization'] = `Bearer ${token}`;
 
   try {
-    const resp = await fetch(`${endpoint}/api/get_limit`, { method: 'GET' });
+    const resp = await fetch(`${cleanEndpoint}/api/get_limit`, { method: 'GET', headers });
     if (resp.ok) {
       const data = await resp.json();
-      apiStatusDot.className = "status-dot online";
-      apiStatusText.textContent = "在線就緒";
-      creditsDisplay.textContent = `剩餘點數：${data.credits_left ?? '正常'}`;
-      log(`✅ Suno API 連線成功！剩餘點數: ${data.credits_left ?? 'N/A'}`);
-      showToast("✅ Suno API 連線成功！");
-    } else throw new Error(`HTTP ${resp.status}`);
+      return { success: true, data };
+    } else {
+      return { success: false, error: `伺服器回應錯誤碼: HTTP ${resp.status}` };
+    }
   } catch (err) {
+    return { success: false, error: err.message || "無法連線至伺服器" };
+  }
+}
+
+// 頁面主控台測試按鈕
+testApiBtn.addEventListener('click', async () => {
+  const endpoint = apiEndpointInput.value.trim().replace(/\/$/, "");
+  const token = localStorage.getItem('suno_api_token') || "";
+  apiStatusDot.className = "status-dot busy";
+  if (apiStatusText) apiStatusText.textContent = "連線中...";
+  log(`🔄 連線測試：${endpoint}/api/get_limit ...`);
+
+  const result = await testSunoConnection(endpoint, token);
+  if (result.success) {
+    const data = result.data;
+    apiStatusDot.className = "status-dot online";
+    apiStatusDot.textContent = "🟢";
+    if (apiStatusText) apiStatusText.textContent = "在線就緒";
+    creditsDisplay.textContent = `剩餘點數：${data.credits_left ?? '正常'}`;
+    log(`✅ Suno API 連線成功！剩餘點數: ${data.credits_left ?? 'N/A'}`);
+    showToast("✅ Suno API 連線成功！");
+  } else {
     apiStatusDot.className = "status-dot";
-    apiStatusText.textContent = "連線失敗";
+    apiStatusDot.textContent = "⚪";
+    if (apiStatusText) apiStatusText.textContent = "連線失敗";
     creditsDisplay.textContent = `剩餘點數：--`;
-    log(`⚠️ 無法連線至 ${endpoint}。您仍可手動貼上 MP3 網址或上傳檔案！`);
+    log(`⚠️ 無法連線至 ${endpoint} (${result.error})。請確認本機 suno-api-server 是否已啟動。`);
     showToast("⚠️ 無法連線至該 API，請確認伺服器已啟動。");
   }
 });
 
+// 模態框內的測試按鈕
+if (testSunoApiBtn) {
+  testSunoApiBtn.addEventListener('click', async () => {
+    const endpoint = sunoApiBaseUrl.value.trim().replace(/\/$/, "");
+    const token = sunoApiToken.value.trim();
+
+    testSunoApiBtn.disabled = true;
+    testSunoApiBtn.innerHTML = "<span>⏳</span> 正在連線測試中...";
+    apiTestResult.style.display = 'flex';
+    apiTestResult.className = 'api-test-result';
+    resultHeader.textContent = "正在測試連線...";
+    resultContent.textContent = `向 ${endpoint}/api/get_limit 發送握手請求...`;
+
+    const result = await testSunoConnection(endpoint, token);
+    testSunoApiBtn.disabled = false;
+    testSunoApiBtn.innerHTML = "<span>⚡</span> 測試連線並查詢剩餘點數";
+
+    if (result.success) {
+      const data = result.data;
+      apiTestResult.className = 'api-test-result success';
+      resultHeader.textContent = "🟢 連線成功 (Connected)";
+      resultContent.innerHTML = `
+        Suno 帳號狀態正常！<br>
+        • 剩餘點數 (Credits Left)：<strong>${data.credits_left ?? '充裕'}</strong><br>
+        • 週期型態 (Period)：${data.period ?? '月度/每日'}<br>
+        • 伺服器回應良好，您現在可以啟用「真實 Suno 生成模式」！
+      `;
+      if (creditsDisplay) creditsDisplay.textContent = `剩餘點數：${data.credits_left ?? '正常'}`;
+      apiStatusDot.textContent = "🟢";
+    } else {
+      apiTestResult.className = 'api-test-result error';
+      resultHeader.textContent = "🔴 連線失敗 (Connection Failed)";
+      resultContent.innerHTML = `
+        連線發生錯誤：${result.error}<br><br>
+        <strong>除錯檢查清單：</strong><br>
+        1. 若使用本機部署，請確認已進入 <code>suno-api-server</code> 目錄執行 <code>npm run dev</code>。<br>
+        2. 請確認 <code>.env</code> 檔案中已設定真實有效的 <code>SUNO_COOKIE</code>。<br>
+        3. 詳細步驟請點擊右上方「完整串接教學手冊」查看。
+      `;
+      apiStatusDot.textContent = "⚪";
+    }
+  });
+}
+
+// 輪詢 Suno 音訊生成進度
+async function pollSunoAudio(endpoint, token, taskIds, tagsStr) {
+  const maxPollCount = 30; // 最長輪詢 120 秒 (30 * 4s)
+  let count = 0;
+  const headers = {};
+  if (token) headers['Authorization'] = `Bearer ${token}`;
+
+  log(`⏳ 開始輪詢生成狀態 (ID: ${taskIds.join(', ')})...`);
+
+  const pollInterval = setInterval(async () => {
+    count++;
+    if (count > maxPollCount) {
+      clearInterval(pollInterval);
+      log(`⚠️ 輪詢逾時：Suno 生成時間較長，您可稍後在 Suno 帳號查看。`);
+      showToast("⚠️ 生成處理中，請稍後在 Suno 官網確認曲目！");
+      return;
+    }
+
+    try {
+      const resp = await fetch(`${endpoint}/api/get?ids=${taskIds.join(',')}`, { method: 'GET', headers });
+      if (resp.ok) {
+        const items = await resp.json();
+        if (Array.isArray(items) && items.length > 0) {
+          const readyItem = items.find(it => it.audio_url && it.status !== 'submitted' && it.status !== 'pending');
+          if (readyItem) {
+            clearInterval(pollInterval);
+            log(`🎉 Suno 音樂生成完成！標題：${readyItem.title || 'Jirai Beat'}`);
+            showToast(`🎉 成功生成 Suno 曲目：${readyItem.title || 'Jirai Beat'}！`);
+
+            addToPool({
+              title: readyItem.title || `Suno Beat #${state.pool.length + 1}`,
+              url: readyItem.audio_url,
+              tags: tagsStr
+            });
+
+            // 電台角色連動台詞
+            if (radioState.isActive) {
+              const line = radioState.gender === 'girl' 
+                ? '呀…！Suno 真的把我們的心情變成音樂了…！快戴上耳機跟我一起聽聽看好不好…？♡' 
+                : '…真的生成出來了。這旋律很沉、很安靜…很合我的胃口。';
+              typeDialogue(line, '🎶 聽感沉浸', { emoji: '🎶', text: '全新生成 (Suno)' });
+            }
+          }
+        }
+      }
+    } catch (e) {
+      console.warn("輪詢狀態異常:", e);
+    }
+  }, 4000);
+}
+
+// 生成按鈕
 document.getElementById('generateSunoBtn').addEventListener('click', async () => {
   const prompt = promptOutput.value.trim();
   if (!prompt) return showToast("⚠️ 請先組裝或輸入 Prompt！");
 
-  const endpoint = apiEndpointInput.value.trim().replace(/\/$/, "");
+  const endpoint = (localStorage.getItem('suno_api_url') || apiEndpointInput.value).trim().replace(/\/$/, "");
+  const token = localStorage.getItem('suno_api_token') || "";
+  const isRealEnabled = localStorage.getItem('suno_api_enabled') === 'true';
   const tagsStr = Array.from(state.selectedTags).join(", ") || "Jirai-kei, Yami-kawaii, Lo-fi";
-  log(`🚀 正在向 ${endpoint}/api/custom_generate 請求純音樂生成...`);
-  showToast("🚀 正在呼叫 Suno 進行純音樂創作，請稍候...");
+
+  if (!isRealEnabled) {
+    // 模擬原型模式 (快速將 Prompt 生成為可播放的 Demo 項目)
+    log(`✨ 模擬原型模式：已根據當前 Prompt 產出曲目至暫存池！`);
+    addToPool({
+      title: `Jirai Emo Beat #${state.pool.length + 1} (Demo)`,
+      url: "./social_mr.sakura_moriendi_emo_--ar_9151_--video_1_--end_loop_260895a7-aeb2-42f3-a3f8-d85bd813bc04_2.mp4",
+      tags: tagsStr
+    });
+    showToast("🎉 已生成示範曲目至暫存池！(若要串接真實 Suno 請點擊頂部設定)");
+    return;
+  }
+
+  // 真實 Suno API 模式
+  log(`🚀 正在向 ${endpoint}/api/custom_generate 請求真實 Suno 純音樂創作...`);
+  showToast("🚀 正在呼叫 Suno 進行真實 AI 創作，請稍候...");
+
+  const headers = { 'Content-Type': 'application/json' };
+  if (token) headers['Authorization'] = `Bearer ${token}`;
 
   try {
     const resp = await fetch(`${endpoint}/api/custom_generate`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers,
       body: JSON.stringify({
-        prompt: "",
+        prompt: prompt,
         tags: tagsStr,
-        title: `Jirai Beat #${state.pool.length + 1}`,
+        title: `Jirai Emo Beat #${state.pool.length + 1}`,
         make_instrumental: true
       })
     });
@@ -820,21 +1028,32 @@ document.getElementById('generateSunoBtn').addEventListener('click', async () =>
     if (resp.ok) {
       const resData = await resp.json();
       log(`🎉 生成任務已發送！`);
-      if (Array.isArray(resData) && resData[0] && resData[0].audio_url) {
-        addToPool({
-          title: resData[0].title || `Suno Beat #${state.pool.length + 1}`,
-          url: resData[0].audio_url,
-          tags: tagsStr
-        });
+
+      if (Array.isArray(resData) && resData[0]) {
+        if (resData[0].audio_url) {
+          addToPool({
+            title: resData[0].title || `Suno Beat #${state.pool.length + 1}`,
+            url: resData[0].audio_url,
+            tags: tagsStr
+          });
+          showToast("🎉 音訊已就緒，已加入暫存池！");
+        } else if (resData[0].id) {
+          showToast("⏳ 任務已排入 Suno 運算雲端，自動輪詢生成中...");
+          const taskIds = resData.map(it => it.id);
+          pollSunoAudio(endpoint, token, taskIds, tagsStr);
+        }
       } else {
         showToast("🎉 任務已送出！請稍後在 Suno 取得音訊 URL 貼入本工房！");
       }
     } else throw new Error(`HTTP ${resp.status}`);
   } catch (err) {
-    log(`❌ 請求失敗: ${err.message}。可複製 Prompt 至 suno.com 創作後將音訊貼入！`);
-    showToast("❌ 發送失敗，可手動將生成的 MP3 貼入工房！");
+    log(`❌ 請求失敗: ${err.message}。可點擊頂部「串接真實 Suno API」檢查連線！`);
+    showToast("❌ 發送失敗，請確認 API 伺服器狀態。");
   }
 });
+
+// 頁面載入時初始化 API 設定
+initSunoApiConfig();
 
 recordBtn.addEventListener('click', () => {
   if (!state.isRecording) {
