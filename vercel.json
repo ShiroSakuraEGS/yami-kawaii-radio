@@ -1,0 +1,33 @@
+{
+  "version": 2,
+  "name": "jirai-kei-emo-beats-studio",
+  "routes": [
+    {
+      "src": "^/social_mr_.*\\.mp4$",
+      "headers": {
+        "cache-control": "public, max-age=31536000, immutable",
+        "accept-ranges": "bytes",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "src": "^/(.*)\\.(mp4|webm|mp3|ogg|wav)$",
+      "headers": {
+        "cache-control": "public, max-age=31536000, immutable",
+        "accept-ranges": "bytes",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "src": "^/(.*)\\.(css|js|json|svg|png|jpg|gif)$",
+      "headers": {
+        "cache-control": "public, max-age=86400, stale-while-revalidate=604800",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
+}

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>地雷系 Emo 音樂影片工房 - Jirai-kei Emo Beats Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=JetBrains+Mono:wght@400;600&family=Zen+Maru+Gothic:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="top-glow-bar"></div>
+
+  <div class="app-container">
+    <header>
+      <div class="brand-title">
+        <div class="brand-icon">🎀💀</div>
+        <div>
+          <h1>JIRAI-KEI EMO BEATS STUDIO</h1>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">
+            地雷系・病態可愛・Emo Lofi 45~60分鐘 音樂影片合成工房 (支援 20首暫存池 & 雙軌平滑重疊混音)
+          </p>
+        </div>
+        <span class="badge">Crossfade Engine v2.0</span>
+      </div>
+      <div class="header-links">
+        <button class="btn-main" id="enterRadioBtn" style="padding: 6px 14px; font-size: 0.85rem;">
+          <span>📻</span> 一鍵切換電台展示
+        </button>
+        <a href="https://github.com/gcui-art/suno-api" target="_blank" class="btn-link">
+          <span>📦</span> gcui-art/suno-api
+        </a>
+        <a href="SUNO_API_RESEARCH.md" target="_blank" class="btn-link">
+          <span>📄</span> 研究報告
+        </a>
+      </div>
+    </header>
+
+    <div class="studio-grid">
+      <!-- 左欄：音畫合成舞台、雙軌 Crossfade 播放器、可排序播放清單 -->
+      <div class="col-left">
+        <div class="card">
+          <div class="card-header">
+            <h2><span>🎬</span> 音畫合成舞台 (Live Visual Stage)</h2>
+            <div style="display: flex; gap: 8px; align-items: center;">
+              <label style="font-size: 0.78rem; color: var(--text-muted); cursor: pointer;">
+                <input type="checkbox" id="toggleCrt" checked> CRT 掃描線
+              </label>
+              <label style="font-size: 0.78rem; color: var(--text-muted); cursor: pointer; margin-left: 6px;">
+                <input type="checkbox" id="toggleVisualizer" checked> 頻譜波形
+              </label>
+            </div>
+          </div>
+
+          <!-- 視覺展示畫布 -->
+          <div class="stage-wrapper" id="stageWrapper">
+            <canvas id="visualizerCanvas" width="1280" height="720"></canvas>
+            <div class="crt-overlay" id="crtOverlay"></div>
+            
+            <div class="stage-hud">
+              <div class="hud-track">
+                <span>🎵</span>
+                <span id="currentTrackName">等待載入音樂...</span>
+              </div>
+              <div class="hud-timer">
+                <span id="timerDisplay">00:00:00 / 45:00:00</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 播放控制列 -->
+          <div class="controls-bar">
+            <div class="playback-btns">
+              <button class="btn-main" id="playBtn">
+                <span id="playIcon">▶</span> <span id="playText">開始沉浸播放</span>
+              </button>
+              <button class="btn-secondary" id="stopBtn">⏹ 停止</button>
+              <button class="btn-secondary" id="nextBtn">⏭ 下一首</button>
+              <button class="btn-secondary" id="recordBtn" style="color: #ff6699;">
+                <span id="recDot">🔴</span> <span id="recText">錄製視訊</span>
+              </button>
+            </div>
+
+            <!-- 目標播放時長選擇 -->
+            <div class="duration-selector">
+              <span style="color: var(--text-muted);">循環目標：</span>
+              <span class="duration-tag active" data-mins="45">45 分鐘</span>
+              <span class="duration-tag" data-mins="60">1 小時</span>
+              <span class="duration-tag" data-mins="999">無限 Loop</span>
+            </div>
+          </div>
+
+          <!-- 🎚️ 雙軌平滑漸變進入/退出與重疊 (Crossfade & Overlap) 設定區 -->
+          <div class="crossfade-panel">
+            <div class="crossfade-info">
+              <span style="font-size: 0.85rem; font-weight: 700; color: #ffb3d9;">🎚️ 雙軌無縫交錯 (Crossfade)：</span>
+              <div class="deck-indicator" id="deckIndicatorA">
+                <span class="deck-dot" id="deckDotA"></span> 軌道 A
+              </div>
+              <div class="deck-indicator" id="deckIndicatorB">
+                <span class="deck-dot" id="deckDotB"></span> 軌道 B
+              </div>
+              <span id="crossfadeStatusText" style="font-size: 0.75rem; color: var(--cyan-subtle); margin-left: 4px;">單軌播放中</span>
+            </div>
+
+            <div class="crossfade-slider-wrap">
+              <span style="color: var(--text-muted);">重疊淡入淡出時長：</span>
+              <input type="range" id="overlapSlider" min="2" max="10" step="1" value="5">
+              <span id="overlapSecText" style="font-weight: 700; color: var(--pink-primary); width: 32px;">5s</span>
+            </div>
+          </div>
+
+          <!-- 素材上傳與自訂區 -->
+          <div class="source-panel">
+            <div class="source-box">
+              <h3><span>🎥</span> 視訊背景 (MP4 / GIF)</h3>
+              <p style="font-size: 0.74rem; color: var(--text-muted);">上傳本地 MP4/GIF 或切換內建主題</p>
+              
+              <div class="input-row">
+                <select id="builtinThemeSelect">
+                  <option value="default-video" selected>🌸 預設：地雷系動畫循環 (Sakura Moriendi Emo)</option>
+                  <option value="rainy-neon">🌧️ 內建畫布：雨夜霓虹與毒粉心跳</option>
+                  <option value="cyber-heart">💔 內建畫布：地雷系心電圖脈衝</option>
+                  <option value="pastel-goth">🎀 內建畫布：粉黑夢核蝴蝶結光暈</option>
+                  <option value="void-glitch">📺 內建畫布：復古電視雪花崩壞</option>
+                </select>
+              </div>
+
+              <div class="input-row">
+                <div class="file-input-wrapper" style="width: 100%;">
+                  <button class="btn-secondary" style="width: 100%;">📁 載入本機 MP4 / GIF</button>
+                  <input type="file" id="videoFileInput" accept="video/mp4,video/webm,image/gif">
+                </div>
+              </div>
+            </div>
+
+            <div class="source-box">
+              <h3><span>🎧</span> 快捷匯入音訊</h3>
+              <p style="font-size: 0.74rem; color: var(--text-muted);">手動加入曲目至暫存庫</p>
+              
+              <div class="input-row">
+                <input type="url" id="manualAudioUrl" placeholder="貼上 Suno 音訊連結 (https://cdn1.suno.ai/...)">
+                <button class="btn-secondary" id="addAudioBtn">加入暫存</button>
+              </div>
+
+              <div class="input-row">
+                <div class="file-input-wrapper" style="width: 100%;">
+                  <button class="btn-secondary" style="width: 100%;">📁 載入本機 MP3 音訊</button>
+                  <input type="file" id="audioFileInput" accept="audio/*">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 📑 正式循環播放清單（支援排列播放順序） -->
+          <div style="margin-top: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <h3 style="font-size: 0.92rem; color: #ffb3d9;">
+                📑 正式循環播放清單 (Playlist)
+                <span style="font-size: 0.76rem; color: var(--text-muted); font-weight: normal; margin-left: 6px;" id="playlistCount">0 首</span>
+              </h3>
+              <div style="display: flex; gap: 6px;">
+                <button class="btn-secondary" id="shuffleBtn" style="padding: 3px 8px; font-size: 0.75rem;">🎲 隨機打亂順序</button>
+                <button class="btn-secondary btn-danger" id="clearPlaylistBtn" style="padding: 3px 8px; font-size: 0.75rem;">清空排程</button>
+              </div>
+            </div>
+
+            <table class="playlist-table">
+              <thead>
+                <tr>
+                  <th style="width: 8%;">序</th>
+                  <th style="width: 44%;">曲名 / 來源</th>
+                  <th style="width: 18%;">淡入淡出</th>
+                  <th style="width: 16%; text-align: center;">順序調整</th>
+                  <th style="width: 14%; text-align: right;">移除</th>
+                </tr>
+              </thead>
+              <tbody id="playlistBody">
+                <tr>
+                  <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 16px;">
+                    排程清單目前為空。請從右側「📦 暫存池 (最多20首)」選取曲目加入！
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- 一鍵 FFmpeg 指令 -->
+          <div style="margin-top: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <h3 style="font-size: 0.88rem; color: #99ffcc;">⚡ FFmpeg 一鍵快速合成 45~60 分鐘 MP4 指令</h3>
+              <button class="btn-secondary" id="copyFfmpegBtn" style="padding: 3px 8px; font-size: 0.72rem;">📋 複製指令</button>
+            </div>
+            <div class="code-snippet" id="ffmpegCmd">ffmpeg -stream_loop -1 -i bg.mp4 -stream_loop -1 -i song.mp3 -t 00:45:00 -c:v copy -c:a aac -b:a 320k output_45min.mp4</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 右欄：20 首臨時曲庫暫存池、100 詞庫、Suno API 對接 -->
+      <div class="col-right">
+        <!-- 📦 生成音樂暫存池 (最多 20 首，支援 localStorage 持久化) -->
+        <div class="card pool-card">
+          <div class="card-header">
+            <h2>
+              <span>📦</span> 臨時音樂暫存庫 
+              <span style="font-size: 0.78rem; color: var(--cyan-subtle); font-weight: normal;" id="poolCountText">(0 / 20 首)</span>
+            </h2>
+            <div class="pool-header-actions">
+              <button class="btn-secondary" id="addAllToPlaylistBtn" style="padding: 3px 8px; font-size: 0.75rem;">➕ 全選加入排程</button>
+              <button class="btn-secondary btn-danger" id="clearPoolBtn" style="padding: 3px 8px; font-size: 0.75rem;">清空</button>
+            </div>
+          </div>
+
+          <p style="font-size: 0.75rem; color: var(--text-muted);">
+            Suno API 生成或手動匯入的曲目將自動暫存於此（上限 20 首，關閉分頁不遺失），勾選或點擊即可排入播放清單。
+          </p>
+
+          <div class="pool-list" id="poolListContainer">
+            <div style="text-align: center; color: var(--text-muted); padding: 18px; font-size: 0.8rem;">
+              暫存庫暫無音樂。點擊下方「直送 Suno 生成」或上傳 MP3 即可儲存至此！
+            </div>
+          </div>
+        </div>
+        
+        <!-- Suno API 服務對接卡片 -->
+        <div class="card">
+          <div class="card-header">
+            <h2><span>🌐</span> Suno API 服務對接</h2>
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span class="status-dot" id="apiStatusDot"></span>
+              <span id="apiStatusText" style="font-size: 0.78rem; color: var(--text-muted);">未連接</span>
+            </div>
+          </div>
+
+          <div class="input-row" style="margin-bottom: 8px;">
+            <input type="text" id="apiEndpoint" value="http://localhost:3000" placeholder="suno-api 伺服器網址 (如 http://localhost:3000 或 Vercel 網址)">
+            <button class="btn-secondary" id="testApiBtn" style="white-space: nowrap;">測試連接</button>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.76rem; color: var(--text-muted);">
+            <span>支援 gcui-art/suno-api 端點</span>
+            <span id="creditsDisplay">剩餘點數：--</span>
+          </div>
+        </div>
+
+        <!-- 100 個病態可愛地雷系關鍵詞庫 -->
+        <div class="card">
+          <div class="card-header">
+            <h2><span>🎀</span> 病態可愛・地雷系 100 詞庫</h2>
+            <button class="btn-main" id="randomizeBtn" style="padding: 4px 10px; font-size: 0.78rem;">
+              🎲 一鍵抽卡
+            </button>
+          </div>
+
+          <div class="keywords-filter">
+            <button class="filter-btn active" data-cat="all">全部 (100)</button>
+            <button class="filter-btn" data-cat="genres">流派 (20)</button>
+            <button class="filter-btn" data-cat="moods">情緒 (20)</button>
+            <button class="filter-btn" data-cat="instruments">樂器 (20)</button>
+            <button class="filter-btn" data-cat="textures">音效 (20)</button>
+            <button class="filter-btn" data-cat="rhythm">節奏 (20)</button>
+          </div>
+
+          <div class="tags-container" id="tagsContainer"></div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+            <span style="font-size: 0.75rem; color: var(--text-muted);" id="selectedCountText">已自選：0 個</span>
+            <button class="btn-secondary" id="clearTagsBtn" style="padding: 2px 6px; font-size: 0.72rem;">清空選取</button>
+          </div>
+
+          <div class="prompt-box">
+            <div style="display: flex; justify-content: space-between; font-size: 0.78rem; margin-bottom: 4px;">
+              <span style="color: #ff99cc;">Suno Pure Instrumental Prompt：</span>
+              <span style="color: var(--cyan-subtle); font-size: 0.72rem;">✔ 純音樂模式 (No Vocal)</span>
+            </div>
+            <textarea id="promptOutput" placeholder="點擊上方標籤或按「一鍵抽卡」，即可自動生成地雷系 Emo 純音樂 Prompt..."></textarea>
+            
+            <div class="prompt-actions">
+              <button class="btn-secondary" id="copyPromptBtn">📋 複製</button>
+              <button class="btn-main" id="generateSunoBtn">
+                <span>⚡</span> 直送 Suno 生成 (存入暫存)
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 系統日誌視窗 -->
+        <div class="card">
+          <div class="card-header">
+            <h2><span>📡</span> 操作與生成日誌</h2>
+            <button class="btn-secondary" id="clearLogBtn" style="padding: 2px 6px; font-size: 0.7rem;">清除</button>
+          </div>
+          <div id="logBox" style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #bbb; max-height: 120px; overflow-y: auto; line-height: 1.5; background: rgba(5, 3, 8, 0.6); padding: 8px 10px; border-radius: 6px;">
+            <div>[系統就緒] 支援 20 首生成曲目暫存與雙軌平滑 Crossfade 重疊混音。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       📻 電台展示全螢幕互動覆蓋層 (Radio Broadcast Mode)
+  ══════════════════════════════════════════════════════ -->
+  <div id="radioModeOverlay">
+    <!-- 背景視覺投影畫布 (與主畫布同步) -->
+    <div class="radio-stage-bg">
+      <canvas id="radioVisualCanvas" width="1920" height="1080"></canvas>
+    </div>
+    <div class="radio-crt"></div>
+
+    <!-- 頂部浮動工具列：左上角電子時鐘 + 右上角控制 -->
+    <div class="radio-top-bar">
+      <!-- 🕒 最左上角電子時鐘 (點擊或標籤切換看時間 / 倒計時) -->
+      <div class="digital-clock-widget" id="radioClockWidget" title="點擊切換 當前時間 / 倒數計時">
+        <div class="clock-header">
+          <span id="clockModeLabel">REAL-TIME CLOCK</span>
+          <span style="font-size: 0.65rem; color: var(--cyan-subtle);">● LIVE</span>
+        </div>
+        <div class="clock-digits" id="radioClockDigits">00:00:00</div>
+        <div class="clock-mode-tabs">
+          <span class="clock-tab active" id="tabClockTime">看時間</span>
+          <span class="clock-tab" id="tabClockCountdown">倒計時</span>
+        </div>
+      </div>
+
+      <!-- 右上角電台控制項 -->
+      <div class="radio-top-actions">
+        <button class="radio-btn" id="radioPlayToggleBtn">
+          <span id="radioPlayIcon">▶</span> <span id="radioPlayText">播放</span>
+        </button>
+        <button class="radio-btn" id="radioNextTrackBtn">
+          <span>⏭</span> 下一首
+        </button>
+        <button class="radio-btn" id="exitRadioBtn" style="border-color: #ff4757; color: #ff6b81;">
+          <span>✕</span> 退出電台 (ESC)
+        </button>
+      </div>
+    </div>
+
+    <!-- 中央區域：病態可愛地雷系虛擬角色陪伴舞台 (可點擊觸發互動) -->
+    <div class="radio-center-area">
+      <div class="character-stage" id="characterStage" title="點擊我進行摸摸或戳戳互動！">
+        <div class="character-mood-badge" id="characterMoodBadge">
+          <span id="charMoodEmoji">🎀</span> <span id="charMoodText">依存病嬌 (Yandere)</span>
+        </div>
+        
+        <!-- 動態二次元角色形象 SVG 容器 (支援少女/少年切換) -->
+        <div class="character-avatar-wrap" id="characterAvatarWrap">
+          <!-- JS 動態注入 SVG 角色立繪 -->
+        </div>
+      </div>
+    </div>
+
+    <!-- 底部視覺小說動態對話框與互動列 -->
+    <div class="radio-bottom-dock">
+      <div class="dialogue-box">
+        <div class="dialogue-header">
+          <div class="speaker-name">
+            <span id="speakerAvatarIcon">🎀</span>
+            <span id="speakerNameText">地雷系病嬌女友・真昼 (Mahiru)</span>
+          </div>
+          <div class="speaker-status">
+            <span>TRACK: </span><span id="radioCurrentTrackText" style="color: #ff99cc;">等待播放...</span>
+            <span style="margin-left: 8px;">EMOTION: </span><span id="radioCurrentEmotionText" style="color: var(--pink-primary);">平靜陪伴</span>
+          </div>
+        </div>
+        <div class="dialogue-text">
+          <span id="dialogueContent">你來了呢…今天也陪著我聽一整晚的 Emo 純音樂，不要隨便離開我喔…好嗎？</span>
+          <span class="dialogue-cursor"></span>
+        </div>
+      </div>
+
+      <!-- 角色互動控制按鈕列 (換性別、換人格、安慰、切歌、倒數) -->
+      <div class="character-action-bar">
+        <div class="action-group-left">
+          <button class="action-pill-btn" id="toggleGenderBtn">
+            <span id="genderIcon">🎀</span> <span id="genderBtnText">切換：地雷系少年</span>
+          </button>
+          <button class="action-pill-btn" id="switchPersonalityBtn">
+            <span>🎭</span> 切換人格/心情 (害怕)
+          </button>
+          <button class="action-pill-btn comfort-btn" id="comfortCharBtn">
+            <span>🥺</span> 摸摸安慰 (固定言語)
+          </button>
+        </div>
+
+        <div class="action-group-right">
+          <button class="action-pill-btn" id="triggerCountdownReactionBtn">
+            <span>⏳</span> 換成倒計時 (慌張)
+          </button>
+          <button class="action-pill-btn" id="charNextMusicBtn">
+            <span>🎵</span> 切換音樂 (聽感反應)
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toastMsg">通知訊息</div>
+
+  <!-- 雙軌 HTML5 Audio 實體 (Deck A & Deck B)，實現專業交錯淡入淡出 -->
+  <audio id="audioDeckA" crossorigin="anonymous" preload="auto"></audio>
+  <audio id="audioDeckB" crossorigin="anonymous" preload="auto"></audio>
+
+  <script src="app.js"></script>
+</body>
+</html>
