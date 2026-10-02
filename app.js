@@ -1316,7 +1316,10 @@ function typeDialogue(text, emotionText, moodBadgeOverride) {
   const curPers = PERSONALITIES[radioState.personalityIndex];
   speakerNameText.textContent = radioState.gender === 'girl' ? curPers.girlTitle : curPers.boyTitle;
   speakerAvatarIcon.textContent = radioState.gender === 'girl' ? '🎀' : '💀';
+  
+  // 設定情緒文字並加入短暫微動態高亮
   radioCurrentEmotionText.textContent = emotionText || curPers.name;
+  radioCurrentEmotionText.classList.add('flash');
 
   if (moodBadgeOverride) {
     charMoodEmoji.textContent = moodBadgeOverride.emoji;
@@ -1346,8 +1349,8 @@ function getRandomDialogue(category) {
   return pool[Math.floor(Math.random() * pool.length)];
 }
 
-// 恢復正常心情狀態
-function resetMoodToNormal(delay = 4000) {
+// 恢復正常心情狀態 (情緒轉換文字短暫停留 1.2 秒後即平滑回復)
+function resetMoodToNormal(delay = 1200) {
   if (radioState.moodTimeout) clearTimeout(radioState.moodTimeout);
   radioState.moodTimeout = setTimeout(() => {
     characterStage.className = 'character-stage';
@@ -1355,6 +1358,7 @@ function resetMoodToNormal(delay = 4000) {
     charMoodEmoji.textContent = curPers.emoji;
     charMoodText.textContent = `${curPers.name} (${curPers.code})`;
     radioCurrentEmotionText.textContent = '平靜陪伴';
+    radioCurrentEmotionText.classList.remove('flash');
   }, delay);
 }
 
@@ -1389,7 +1393,7 @@ function updateRadioClock() {
   }
 }
 
-// 觸發：換成倒計時（觸發慌張焦慮反應）
+// 觸發：換成倒計時（觸發慌張焦慮反應，情緒文字停留 1.2 秒）
 function triggerCountdownReaction() {
   radioState.clockMode = 'countdown';
   updateRadioClock();
@@ -1397,7 +1401,7 @@ function triggerCountdownReaction() {
   characterStage.className = 'character-stage panic';
   const line = getRandomDialogue('countdown_panic');
   typeDialogue(line, '⚡ 慌張焦慮', { emoji: '⚡', text: '慌張焦慮 (Panic)' });
-  resetMoodToNormal(5000);
+  resetMoodToNormal(1200);
   showToast("⏳ 已切換為倒計時模式！（角色陷入慌張）");
 }
 
@@ -1412,11 +1416,11 @@ function triggerTimeMode() {
       : '…切回常規時間了嗎？很好。那種數字一直在減少的感覺，真的很令人窒息。',
     '安心陪伴'
   );
-  resetMoodToNormal(3000);
+  resetMoodToNormal(1200);
   showToast("🕒 已切換為看時間模式。");
 }
 
-// 觸發：點擊角色互動（摸摸戳戳）
+// 觸發：點擊角色互動（摸摸戳戳，害羞文字停留 1.2 秒）
 characterStage.addEventListener('click', () => {
   characterStage.className = 'character-stage';
   void characterStage.offsetWidth; // 強制重繪觸發動畫
@@ -1424,10 +1428,10 @@ characterStage.addEventListener('click', () => {
 
   const line = getRandomDialogue('click_react');
   typeDialogue(line, '♡ 害羞心動', { emoji: '♡', text: '害羞心動 (Blushing)' });
-  resetMoodToNormal(3500);
+  resetMoodToNormal(1200);
 });
 
-// 觸發：切換人格/心情（觸發害怕恐懼被重置）
+// 觸發：切換人格/心情（害怕文字停留 1.2 秒後進入新人格）
 switchPersonalityBtn.addEventListener('click', () => {
   radioState.personalityIndex = (radioState.personalityIndex + 1) % PERSONALITIES.length;
   const newPers = PERSONALITIES[radioState.personalityIndex];
@@ -1443,21 +1447,23 @@ switchPersonalityBtn.addEventListener('click', () => {
     charMoodEmoji.textContent = newPers.emoji;
     charMoodText.textContent = `${newPers.name} (${newPers.code})`;
     radioCurrentEmotionText.textContent = newPers.name;
+    radioCurrentEmotionText.classList.remove('flash');
     typeDialogue(
       radioState.gender === 'girl' ? newPers.greetingGirl : newPers.greetingBoy,
       newPers.name
     );
-  }, 3500);
+    resetMoodToNormal(1200);
+  }, 1200);
 
   showToast(`🎭 切換人格心情：${newPers.name}`);
 });
 
-// 觸發：摸摸安慰（固定言語安撫）
+// 觸發：摸摸安慰（固定言語安撫，安心文字停留 1.5 秒）
 comfortCharBtn.addEventListener('click', () => {
   characterStage.className = 'character-stage';
   const line = getRandomDialogue('comfort');
   typeDialogue(line, '🌸 安心被愛', { emoji: '🌸', text: '安心被愛 (Comforted)' });
-  resetMoodToNormal(6000);
+  resetMoodToNormal(1500);
   showToast("🥺 已送出溫柔安撫言語！");
 });
 
@@ -1482,11 +1488,11 @@ toggleGenderBtn.addEventListener('click', () => {
     ? '我是真昼喔…從現在開始，你眼裡只准看著我一個人…明白了嗎？♡' 
     : '…我是夜宵。別隨便盯著我看…坐下來一起聽歌吧。';
   typeDialogue(intro, '初次見面');
-  resetMoodToNormal(3500);
+  resetMoodToNormal(1200);
   showToast(`🎀 已切換陪伴角色為：${radioState.gender === 'girl' ? '地雷系少女 真昼' : '地雷系少年 夜宵'}`);
 });
 
-// 觸發：切換音樂（聽感反應）
+// 觸發：切換音樂（聽感反應，文字停留 1.2 秒）
 charNextMusicBtn.addEventListener('click', () => {
   if (state.playlist.length <= 1) {
     showToast("⚠️ 排程中僅有 1 首或無音樂，無法切換！");
@@ -1495,7 +1501,7 @@ charNextMusicBtn.addEventListener('click', () => {
   triggerCrossfade();
   const line = getRandomDialogue('song_change');
   typeDialogue(line, '🎶 聽感沉浸', { emoji: '🎶', text: '聽感沉浸 (Vibe)' });
-  resetMoodToNormal(4000);
+  resetMoodToNormal(1200);
 });
 
 // 倒計時反應按鈕
@@ -1530,7 +1536,7 @@ radioNextTrackBtn.addEventListener('click', () => {
   triggerCrossfade();
   const line = getRandomDialogue('song_change');
   typeDialogue(line, '🎶 聽感沉浸', { emoji: '🎶', text: '聽感沉浸 (Vibe)' });
-  resetMoodToNormal(4000);
+  resetMoodToNormal(1200);
 });
 
 function updateRadioPlayBtn() {

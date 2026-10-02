@@ -847,6 +847,17 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus, select:focus 
   font-family: 'JetBrains Mono', monospace;
 }
 
+#radioCurrentEmotionText {
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+#radioCurrentEmotionText.flash {
+  color: #ff3385 !important;
+  text-shadow: 0 0 10px #ff3385, 0 0 20px rgba(255, 51, 133, 0.6);
+  transform: scale(1.05);
+}
+
 .dialogue-text {
   font-size: 1.05rem;
   line-height: 1.6;
