@@ -1053,12 +1053,12 @@ requestAnimationFrame(renderCanvas);
 // 虛擬角色性別與人格配置
 const PERSONALITIES = [
   {
-    id: 'yandere',
-    name: '依存病嬌',
-    code: 'Yandere',
+    id: 'companion',
+    name: '溫柔陪伴',
+    code: 'Companion',
     emoji: '🎀',
-    girlTitle: '地雷系病嬌女友・真昼 (Mahiru)',
-    boyTitle: '地雷系執念男友・夜宵 (Yayoi)',
+    girlTitle: '真昼 (Mahiru)',
+    boyTitle: '夜宵 (Yayoi)',
     greetingGirl: '你來了呢…今天也陪著我聽一整晚的 Emo 純音樂，不要隨便離開我喔…好嗎？♡',
     greetingBoy: '…你來了。今晚也只能待在我身邊聽這些歌，不准隨便消失。'
   },
@@ -1067,8 +1067,8 @@ const PERSONALITIES = [
     name: '厭世自毀',
     code: 'Emo Doom',
     emoji: '💀',
-    girlTitle: '厭世虛無少女・真昼 (Mahiru)',
-    boyTitle: '自毀冷感少年・夜宵 (Yayoi)',
+    girlTitle: '真昼 (Mahiru)',
+    boyTitle: '夜宵 (Yayoi)',
     greetingGirl: '世界好吵…只有這些低保真的音符能讓我的心稍微安靜下來…我們一起躲起來好不好？',
     greetingBoy: '…活著好累。只想把耳機音量開到最大，讓重低音把那些多餘的想法全部震碎。'
   },
@@ -1077,8 +1077,8 @@ const PERSONALITIES = [
     name: '傲嬌敏感',
     code: 'Tsundere',
     emoji: '🔪',
-    girlTitle: '敏感刺蝟少女・真昼 (Mahiru)',
-    boyTitle: '別扭防衛少年・夜宵 (Yayoi)',
+    girlTitle: '真昼 (Mahiru)',
+    boyTitle: '夜宵 (Yayoi)',
     greetingGirl: '才、才不是特地等你來聽電台的呢！只是剛好播到這首而已…你可別自作多情！哼！',
     greetingBoy: '…幹嘛一直盯著我？想聽就坐下好好聽，別在旁邊晃來晃去的，很煩人耶。'
   },
@@ -1087,8 +1087,8 @@ const PERSONALITIES = [
     name: '脆弱透明',
     code: 'Fragile Glass',
     emoji: '💧',
-    girlTitle: '琉璃破碎少女・真昼 (Mahiru)',
-    boyTitle: '易碎透明少年・夜宵 (Yayoi)',
+    girlTitle: '真昼 (Mahiru)',
+    boyTitle: '夜宵 (Yayoi)',
     greetingGirl: '我就像隨時會碎掉的玻璃一樣呢…如果你不抓緊我的手，我可能下一秒就融化在雨裡了…',
     greetingBoy: '…我好像不太擅長維持正常的樣子。如果哪一天我壞掉了，你也會直接丟掉我嗎…？'
   }
@@ -1350,7 +1350,7 @@ function typeDialogue(text, emotionText, moodBadgeOverride) {
   speakerAvatarIcon.textContent = radioState.gender === 'girl' ? '🎀' : '💀';
   
   // 設定情緒文字並加入短暫微動態高亮
-  radioCurrentEmotionText.textContent = emotionText || curPers.name;
+  radioCurrentEmotionText.textContent = emotionText || '平靜陪伴';
   radioCurrentEmotionText.classList.add('flash');
 
   if (moodBadgeOverride) {
@@ -1358,9 +1358,9 @@ function typeDialogue(text, emotionText, moodBadgeOverride) {
     charMoodText.textContent = moodBadgeOverride.text;
     characterMoodBadge.classList.add('visible'); // 浮現反應標籤
   } else {
-    charMoodEmoji.textContent = curPers.emoji;
-    charMoodText.textContent = `${curPers.name} (${curPers.code})`;
-    characterMoodBadge.classList.remove('visible'); // 平常保持隱藏，不擋住畫面
+    charMoodEmoji.textContent = '';
+    charMoodText.textContent = '';
+    characterMoodBadge.classList.remove('visible'); // 平常保持完全隱藏，不擋住畫面
   }
 
   dialogueContent.textContent = '';
@@ -1388,9 +1388,8 @@ function resetMoodToNormal(delay = 1500) {
   if (radioState.moodTimeout) clearTimeout(radioState.moodTimeout);
   radioState.moodTimeout = setTimeout(() => {
     characterStage.className = 'character-stage';
-    const curPers = PERSONALITIES[radioState.personalityIndex];
-    charMoodEmoji.textContent = curPers.emoji;
-    charMoodText.textContent = `${curPers.name} (${curPers.code})`;
+    charMoodEmoji.textContent = '';
+    charMoodText.textContent = '';
     radioCurrentEmotionText.textContent = '平靜陪伴';
     radioCurrentEmotionText.classList.remove('flash');
     // 🌟 播完後反應標籤徹底淡出消失，絕不擋住畫面
