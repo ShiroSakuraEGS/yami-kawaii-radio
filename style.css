@@ -19,7 +19,7 @@
 
 body {
   background-color: var(--bg-dark);
-  background-image: 
+  background-image:
     radial-gradient(circle at 10% 15%, rgba(255, 51, 133, 0.08) 0%, transparent 40%),
     radial-gradient(circle at 90% 80%, rgba(184, 77, 255, 0.08) 0%, transparent 40%),
     linear-gradient(180deg, #060409 0%, #0d0914 100%);
@@ -768,8 +768,6 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus, select:focus 
 @keyframes stageFear {
   0% { transform: translateY(0px); filter: drop-shadow(0 0 20px #b84dff); }
   100% { transform: translateY(6px); filter: drop-shadow(0 0 30px #ff3385); }
-}
-  100% { transform: translateY(12px) scale(0.94); filter: drop-shadow(0 0 20px #ff3385); }
 }
 
 /* 角色頭頂心情漂浮標籤 */
