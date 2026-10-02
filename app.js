@@ -1171,8 +1171,9 @@ const radioPlayIcon = document.getElementById('radioPlayIcon');
 const radioPlayText = document.getElementById('radioPlayText');
 const radioNextTrackBtn = document.getElementById('radioNextTrackBtn');
 
-// 🎨 渲染地雷系虛擬角色 SVG 立繪 (少女 / 少年)
+// 🎨 渲染地雷系虛擬角色 (若無假人像容器則完全呈現背景影片中的人物)
 function renderCharacterAvatar() {
+  if (!characterAvatarWrap) return;
   if (radioState.gender === 'girl') {
     characterAvatarWrap.innerHTML = `
       <svg viewBox="0 0 260 340" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
