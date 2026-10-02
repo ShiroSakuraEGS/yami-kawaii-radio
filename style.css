@@ -691,6 +691,95 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus, select:focus 
   font-weight: 700;
 }
 
+/* 🍅 番茄鐘互動控制面板 (Jirai-kei Cyberpunk 風格) */
+.pomodoro-panel {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed rgba(255, 51, 133, 0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  cursor: default;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.pomo-preset-row {
+  display: flex;
+  gap: 5px;
+  justify-content: space-between;
+}
+
+.pomo-preset-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #eee;
+  font-size: 0.68rem;
+  padding: 3px 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.pomo-preset-btn:hover {
+  background: rgba(0, 240, 255, 0.25);
+  border-color: #00f0ff;
+  color: #00f0ff;
+}
+
+.pomo-preset-btn.active {
+  background: #00f0ff;
+  border-color: #00f0ff;
+  color: #0d0816;
+  font-weight: 700;
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+}
+
+.pomo-action-row {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pomo-btn-sub {
+  background: rgba(255, 51, 133, 0.15);
+  border: 1px solid var(--border-bright);
+  color: #ff99cc;
+  font-size: 0.7rem;
+  padding: 4px 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.pomo-btn-sub:hover {
+  background: var(--pink-primary);
+  color: #fff;
+  box-shadow: 0 0 8px var(--pink-glow);
+}
+
+.pomo-btn-main {
+  flex-grow: 1;
+  background: linear-gradient(135deg, #ff3385 0%, #b84dff 100%);
+  border: none;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 0 10px rgba(255, 51, 133, 0.3);
+  text-align: center;
+}
+
+.pomo-btn-main:hover {
+  box-shadow: 0 0 14px var(--pink-glow);
+  transform: translateY(-1px);
+}
+
 /* 右上角控制區 */
 .radio-top-actions {
   display: flex;

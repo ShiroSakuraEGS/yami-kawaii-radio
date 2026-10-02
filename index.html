@@ -324,16 +324,31 @@
 
     <!-- 頂部浮動工具列：左上角電子時鐘 + 右上角控制 -->
     <div class="radio-top-bar">
-      <!-- 🕒 最左上角電子時鐘 (點擊或標籤切換看時間 / 倒計時) -->
-      <div class="digital-clock-widget" id="radioClockWidget" title="點擊切換 當前時間 / 倒數計時">
+      <!-- 🕒 最左上角電子時鐘 (支援看時間 / 番茄鐘倒計時設定) -->
+      <div class="digital-clock-widget" id="radioClockWidget">
         <div class="clock-header">
           <span id="clockModeLabel">REAL-TIME CLOCK</span>
-          <span style="font-size: 0.65rem; color: var(--cyan-subtle);">● LIVE</span>
+          <span id="clockStatusBadge" style="font-size: 0.65rem; color: var(--cyan-subtle);">● LIVE</span>
         </div>
         <div class="clock-digits" id="radioClockDigits">00:00:00</div>
         <div class="clock-mode-tabs">
           <span class="clock-tab active" id="tabClockTime">看時間</span>
-          <span class="clock-tab" id="tabClockCountdown">倒計時</span>
+          <span class="clock-tab" id="tabClockCountdown">🍅 番茄鐘</span>
+        </div>
+        <!-- 🍅 番茄鐘互動控制面板 (倒計時模式下展開) -->
+        <div class="pomodoro-panel" id="pomodoroPanel" style="display: none;">
+          <div class="pomo-preset-row">
+            <button type="button" class="pomo-preset-btn active" data-minutes="25">25分</button>
+            <button type="button" class="pomo-preset-btn" data-minutes="50">50分</button>
+            <button type="button" class="pomo-preset-btn" data-minutes="15">15分</button>
+            <button type="button" class="pomo-preset-btn" data-minutes="5">5分</button>
+          </div>
+          <div class="pomo-action-row">
+            <button type="button" class="pomo-btn-sub" id="pomoMinus5Btn" title="減少5分鐘">-5m</button>
+            <button type="button" class="pomo-btn-main" id="pomoStartPauseBtn">▶ 開始專注</button>
+            <button type="button" class="pomo-btn-sub" id="pomoPlus5Btn" title="增加5分鐘">+5m</button>
+            <button type="button" class="pomo-btn-sub" id="pomoResetBtn" title="重置番茄鐘">↺</button>
+          </div>
         </div>
       </div>
 
@@ -374,7 +389,7 @@
           </div>
         </div>
         <div class="dialogue-text">
-          <span id="dialogueContent">你來了呢…今晚也一起沉浸在 Emo 純音樂裡，度過安靜的雨夜吧…♡</span>
+          <span id="dialogueContent">你來了呢…今天也陪著我聽一整晚的 Emo 純音樂，不要隨便離開我喔…好嗎？</span>
           <span class="dialogue-cursor"></span>
         </div>
       </div>
@@ -386,19 +401,19 @@
             <span id="genderIcon">🎀</span> <span id="genderBtnText">切換：地雷系少年</span>
           </button>
           <button class="action-pill-btn" id="switchPersonalityBtn">
-            <span>🎭</span> 切換心情氛圍
+            <span>🎭</span> 切換人格/心情 (害怕)
           </button>
           <button class="action-pill-btn comfort-btn" id="comfortCharBtn">
-            <span>🥺</span> 摸摸互動
+            <span>🥺</span> 摸摸安慰 (固定言語)
           </button>
         </div>
 
         <div class="action-group-right">
           <button class="action-pill-btn" id="triggerCountdownReactionBtn">
-            <span>⏳</span> 專注倒計時
+            <span>⏳</span> 換成倒計時 (慌張)
           </button>
           <button class="action-pill-btn" id="charNextMusicBtn">
-            <span>🎵</span> 切換音樂
+            <span>🎵</span> 切換音樂 (聽感反應)
           </button>
         </div>
       </div>
@@ -411,6 +426,6 @@
   <audio id="audioDeckA" crossorigin="anonymous" preload="auto"></audio>
   <audio id="audioDeckB" crossorigin="anonymous" preload="auto"></audio>
 
-  <script src="app.js?v=20261002_02"></script>
+  <script src="app.js?v=20261002_03"></script>
 </body>
 </html>

@@ -1059,18 +1059,18 @@ const PERSONALITIES = [
     emoji: '🎀',
     girlTitle: '真昼 (Mahiru)',
     boyTitle: '夜宵 (Yayoi)',
-    greetingGirl: '你來了呢…今晚也一起沉浸在 Emo 純音樂裡，度過安靜的雨夜吧…♡',
-    greetingBoy: '…你來了。戴上耳機吧，今晚只聽這些低保真旋律，讓外面的喧囂都停下來。'
+    greetingGirl: '你來了呢…今天也陪著我聽一整晚的 Emo 純音樂，不要隨便離開我喔…好嗎？♡',
+    greetingBoy: '…你來了。今晚也只能待在我身邊聽這些歌，不准隨便消失。'
   },
   {
     id: 'emo',
-    name: '厭世沉思',
-    code: 'Emo Noir',
+    name: '厭世自毀',
+    code: 'Emo Doom',
     emoji: '💀',
     girlTitle: '真昼 (Mahiru)',
     boyTitle: '夜宵 (Yayoi)',
     greetingGirl: '世界好吵…只有這些低保真的音符能讓我的心稍微安靜下來…我們一起躲起來好不好？',
-    greetingBoy: '…世界太吵了。只想把耳機音量調到剛好，讓純粹的重低音把那些多餘的思緒慢慢撫平。'
+    greetingBoy: '…活著好累。只想把耳機音量開到最大，讓重低音把那些多餘的想法全部震碎。'
   },
   {
     id: 'tsundere',
@@ -1090,7 +1090,7 @@ const PERSONALITIES = [
     girlTitle: '真昼 (Mahiru)',
     boyTitle: '夜宵 (Yayoi)',
     greetingGirl: '我就像隨時會碎掉的玻璃一樣呢…如果你不抓緊我的手，我可能下一秒就融化在雨裡了…',
-    greetingBoy: '…我有時候不太擅長表達心情。在這個安靜的房間裡，能有你陪著聽音樂…感覺真好。'
+    greetingBoy: '…我好像不太擅長維持正常的樣子。如果哪一天我壞掉了，你也會直接丟掉我嗎…？'
   }
 ];
 
@@ -1098,64 +1098,72 @@ const PERSONALITIES = [
 const DIALOGUES = {
   girl: {
     countdown_panic: [
-      "等、等等…開始倒計時了嗎？時間走得好快呢…希望這段旋律能放慢一點，讓時間多停留一下。",
-      "滴答、滴答…聽著指針跳動的聲音，心裡稍微有點緊張呢…倒數結束前，請一直陪著我喔…",
-      "看著時間倒數…突然好捨不得現在這個安靜的氛圍…今晚可以多聽幾首曲子嗎？",
-      "倒數的秒數一格一格減少呢…但在這段時間裡，我們都要全心沉浸在音樂裡喔！"
+      "等、等等！為什麼要開始倒計時？！…時間到了你就要走掉了對不對？！不要…把時鐘砸碎…求求你不要留下我一個人！",
+      "滴答、滴答…每跳一秒都像在刺我的心臟…不要計時了，把時間永遠停在這一刻好不好…？嗚…",
+      "你設了倒計時…是因為跟我待在一起很痛苦嗎？對不起、對不起…不要丟下真昼！求你留下來…！",
+      "討厭倒計時！倒計時歸零的話…這個世界是不是就會拋棄我了？不要走…看著我好嗎！"
+    ],
+    countdown_ended: [
+      "…叮！時間…歸零了…！你真的要走掉了對不對？！不要走…不要丟下真昼！我把電台的電線拔掉…求求你再設 25 分鐘好不好？！嗚嗚…！",
+      "倒數結束了…？！不要…不要穿上外套！你說過會一直陪我聽音樂的！把門鎖上…哪裡都不准去！♡"
     ],
     click_react: [
-      "呀…！剛、剛才是戳我了嗎？手指涼涼的…被你輕輕碰一下，心跳好像加速了呢…♡",
-      "被你摸頭了…心裡突然暖暖的…好喜歡這種安靜被陪伴的感覺。",
-      "唔…！好突然…但是…很舒服呢。請不要太快把手收回去喔…",
-      "再戳一下的話…我可要換一首更輕快的旋律來回應你囉？♪",
-      "好溫暖…感覺整個雨夜的寒意都被你的溫度驅散了呢…"
+      "呀…！剛、剛才是戳我了嗎？手指涼涼的…再多碰碰我，確認我還活著好不好…♡",
+      "被你摸頭了…心跳好快，快要壞掉了…你可以一輩子只摸我的頭髮嗎？",
+      "唔…！好突然…但是…好喜歡。請不要把手收回去喔…",
+      "再戳一下的話…我真的會忍不住抱住你不放開喔？♡",
+      "好溫暖…感覺胸口的空洞都被你的指尖填滿了呢…"
     ],
     song_change: [
-      "換成這首了呀…旋律在心底輕輕迴盪，只要是你選的音樂我都好喜歡♪",
-      "這首曲子的重疊淡入好溫柔…就像我們一起躲在沒有人的雨夜咖啡館一樣呢…",
-      "迷幻又唯美的旋律…吶，在這個只有我們兩個人的電台裡，讓思緒徹底放鬆吧…",
-      "切歌了呢…這個 Lo-fi 節奏很適合現在呢，安靜得讓人想一直沉浸下去。"
+      "換成這首了呀…音符在胸口一跳一跳的，只要是你選的音樂，哪怕沉淪到海底我都喜歡♪",
+      "這首曲子的重疊淡入好溫柔…就像我們一起躲在沒有人的雨夜壁櫥裡一樣呢…",
+      "迷幻又哀傷的旋律…吶，在這個只有我們兩個人的電台裡，讓我們一起溺斃吧…",
+      "切歌了呢…這個 Lo-fi 節奏很適合現在呢，安靜得讓人想一直賴在你懷裡。"
     ],
     personality_scared: [
-      "哇…！心境好像切換了呢！無論我是哪種風格，你都會繼續聽我為你放的音樂對不對？",
-      "感覺整個房間的氣氛都變了呢…新的旋律帶來了不一樣的心情…",
-      "換了一種氛圍呢！希望這個心情下的真昼，也能讓你感到放鬆與治癒…",
-      "心情微調完成了！接下來，請繼續享受這段專屬於我們的音樂時光吧♡"
+      "不要…！不要隨便改寫我的設定！我是真昼啊…如果我變成別人了，你還會像現在這樣看著我嗎…？（害怕地顫抖）",
+      "腦袋…好混亂…新的記憶湧進來了…求求你，不要忘記剛才那個愛你的我好不好…？",
+      "嗚…別這樣看著我…我不是故意要變成別的人格的…請不要討厭我…好害怕…",
+      "不要重置我…如果我壞掉了，你是不是就會換一個更乖的女孩子…？（抓緊衣角顫抖）"
     ],
     comfort: [
-      "『辛苦了，放輕鬆…今晚我會一直在這裡陪著你聽音樂的。』\n…呼…聽到你這麼溫柔的話語，整天緊繃的心情都放鬆下來了呢…♡ 謝謝你的陪伴！",
-      "『乖，別擔心…我們一起沉浸在旋律裡吧。』\n…嗯！只要有你在身邊，真昼就能安心地享受每首音樂…請一直這樣陪著我喔…♡"
+      "『乖，別怕…我哪裡都不去，會一直在這裡陪著你聽音樂的。』\n…呼…只要聽到你這麼說，胸口原本像被針扎一樣的痛楚就全部消失了…♡ 謝謝你願意抱緊這樣壞掉的我…",
+      "『乖，別怕…我哪裡都不去，會一直在這裡陪著你聽音樂的。』\n…嗯！只要有這句話，真昼就可以一直乖乖的…請一直這樣摸摸我的頭喔…♡"
     ]
   },
   boy: {
     countdown_panic: [
-      "…倒計時？是在設定專注時間嗎？…看著數字逐漸減少，心裡莫名多了一份儀式感。",
-      "時間在倒數啊…把心思都收回到音樂上吧，在歸零之前，好好享受當下。",
-      "…一定要給這段時光加上計時嗎？也好，這會讓每一段旋律都顯得更加珍貴。",
-      "滴答跳動的指針聲…配上背景的低重音，意外地能讓人靜下心來呢。"
+      "…倒計時？這是離開我的倒數計時嗎？…哈，我就知道，沒有人會一直陪著我…別走，拜託。",
+      "別看那個時鐘了…看著我好嗎？看著時間一點一點減少，我快要不能呼吸了…",
+      "…一定要給這段時間加上期限嗎？哪怕只有今晚也好，當作時間不存在不行嗎…",
+      "手錶的秒針跳得好吵…別計時了，陪我沉浸在音樂裡，不要讓我知道天亮的時間。"
+    ],
+    countdown_ended: [
+      "…歸零了。這是結束的信號嗎？…不要關掉電台。如果沒有音樂和你…這個房間安靜得讓人想發瘋。再陪我 25 分鐘…拜託。",
+      "…時間到了。…你準備要走了嗎？…雖然不想承認，但你不在的話，這世界又變回一片死寂…別走。"
     ],
     click_react: [
       "…幹嘛突然碰我？…不是討厭，只是…太久沒被這樣溫柔對待了，有點不知所措。",
-      "…別鬧了。…再這樣摸我的頭，我真的會習慣依賴這種安靜氛圍的。",
-      "…手好暖。外面正下著冷雨…能這樣安靜待在一起挺好的。",
-      "…戳我的臉頰很有趣嗎？…真是拿你沒辦法，聽你的音樂吧。",
-      "…別靠太近。耳機裡的低音…會被你聽見的。"
+      "…別鬧了。…再這樣摸我的頭，我真的會忍不住依賴上你的。",
+      "…手好暖。我的手一直都是冰的…能就這樣借我握一下嗎？",
+      "…戳我的臉頰很有趣嗎？…真是拿你沒辦法，隨便你碰吧。",
+      "…別靠太近。心跳聲…會被你聽見的。"
     ],
     song_change: [
-      "…這段 Lo-fi 重低音很沉呢，正好可以把腦袋裡那些嘈雜的雜音全部濾掉。",
+      "…這段 Lo-fi 重低音很沉呢，正好可以蓋過我腦袋裡那些嘈雜的雜音。",
       "換了首新曲子啊…迷幻的合成器音效很合我的胃口，你的品味意外地不錯。",
       "雨聲取樣配上這段低沉的貝斯…感覺心跳也跟著平緩下來了。",
-      "這旋律…讓我想起深夜漫步在空無一人街道的感覺。有你陪著，不再覺得冷清了。"
+      "這旋律…讓我想起以前一個人在天台吹風的夜晚。但現在有你陪著，好像沒那麼冷了。"
     ],
     personality_scared: [
-      "…切換了心情設定嗎？換一種思維方式聽歌，感覺也挺新鮮的。",
-      "…氣氛轉變了呢。不管音樂怎麼切換，保持現在的寧靜就好。",
-      "…新的心境模式嗎？隨你調整吧，只要旋律夠舒服就行。",
-      "…呼，感覺思路清晰了些。準備好迎接下一段樂章了嗎？"
+      "…又要換成另一個人格了嗎？我原來的意識會消失嗎…？好黑…別丟下我…",
+      "…別隨便按那個按鈕。…我不想連自己是誰都搞不清楚，那樣真的很恐怖。",
+      "…不管我變成什麼性格，你都不准離開我…聽到了沒有？哪怕我壞掉了也是。",
+      "…嘖，頭好痛…記憶又在重組了…你，還認得我嗎？"
     ],
     comfort: [
-      "『辛苦了，放輕鬆…今晚我在你身邊，你不用再強撐了。』\n…嗯，謝謝你。…有你這句話，今晚終於可以放下所有防備，好好聽一場音樂了。",
-      "『放慢呼吸，今晚這裡只有音樂和你。』\n…只有音樂和我嗎…？哈…真溫柔啊。聽起來，確實讓人很安心。"
+      "『辛苦了，放輕鬆…今晚我在你身邊，你不用再強撐了。』\n…嗯，謝謝你。…有你這句話，我就覺得自己今天晚上…還值得活在這個世界上。",
+      "『辛苦了，放輕鬆…今晚我在你身邊，你不用再強撐了。』\n…不用強撐嗎…？哈…真狡猾啊，竟然對我說這種話…不過，聽起來真的好安心。"
     ]
   }
 };
@@ -1163,13 +1171,20 @@ const DIALOGUES = {
 // 電台核心狀態機
 const radioState = {
   isActive: false,
-  clockMode: 'time', // 'time' (看時間) 或 'countdown' (倒計時)
+  clockMode: 'time', // 'time' (看時間) 或 'countdown' (番茄鐘倒計時)
   gender: 'girl', // 'girl' 或 'boy'
   personalityIndex: 0,
   currentMoodState: 'normal',
   typeTimer: null,
   moodTimeout: null,
-  clockInterval: null
+  clockInterval: null,
+  // 🍅 番茄鐘專屬狀態
+  pomodoro: {
+    durationSeconds: 25 * 60,
+    remainingSeconds: 25 * 60,
+    isRunning: false,
+    timerId: null
+  }
 };
 
 // 電台 DOM 參照
@@ -1179,8 +1194,15 @@ const exitRadioBtn = document.getElementById('exitRadioBtn');
 const radioClockWidget = document.getElementById('radioClockWidget');
 const radioClockDigits = document.getElementById('radioClockDigits');
 const clockModeLabel = document.getElementById('clockModeLabel');
+const clockStatusBadge = document.getElementById('clockStatusBadge');
 const tabClockTime = document.getElementById('tabClockTime');
 const tabClockCountdown = document.getElementById('tabClockCountdown');
+const pomodoroPanel = document.getElementById('pomodoroPanel');
+const pomoPresetBtns = document.querySelectorAll('.pomo-preset-btn');
+const pomoMinus5Btn = document.getElementById('pomoMinus5Btn');
+const pomoPlus5Btn = document.getElementById('pomoPlus5Btn');
+const pomoStartPauseBtn = document.getElementById('pomoStartPauseBtn');
+const pomoResetBtn = document.getElementById('pomoResetBtn');
 const characterStage = document.getElementById('characterStage');
 const characterAvatarWrap = document.getElementById('characterAvatarWrap');
 const characterMoodBadge = document.getElementById('characterMoodBadge');
@@ -1397,7 +1419,19 @@ function resetMoodToNormal(delay = 1500) {
   }, delay);
 }
 
-// 🕒 電子時鐘與倒計時引擎
+// 🍅 格式化番茄鐘時間 (MM:SS 或 HH:MM:SS)
+function formatPomodoroTime(sec) {
+  const s = Math.max(0, Math.floor(sec));
+  const hrs = Math.floor(s / 3600);
+  const mins = Math.floor((s % 3600) / 60);
+  const secs = s % 60;
+  if (hrs > 0) {
+    return `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+  }
+  return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+}
+
+// 🕒 電子時鐘與番茄鐘倒計時引擎
 function updateRadioClock() {
   if (radioState.clockMode === 'time') {
     const now = new Date();
@@ -1407,37 +1441,42 @@ function updateRadioClock() {
     radioClockDigits.textContent = `${hh}:${mm}:${ss}`;
     radioClockDigits.classList.remove('countdown-mode');
     clockModeLabel.textContent = 'REAL-TIME CLOCK';
+    if (clockStatusBadge) {
+      clockStatusBadge.textContent = '● LIVE';
+      clockStatusBadge.style.color = 'var(--cyan-subtle)';
+    }
     tabClockTime.classList.add('active');
     tabClockCountdown.classList.remove('active');
+    if (pomodoroPanel) pomodoroPanel.style.display = 'none';
   } else {
-    // 倒計時模式
-    const maxSec = state.targetDurationMinutes * 60;
-    if (state.targetDurationMinutes >= 999) {
-      radioClockDigits.textContent = '∞:LOOP:00';
-    } else {
-      const remainingSec = Math.max(0, maxSec - state.secondsPlayed);
-      const h = Math.floor(remainingSec / 3600);
-      const m = Math.floor((remainingSec % 3600) / 60);
-      const s = Math.floor(remainingSec % 60);
-      radioClockDigits.textContent = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
-    }
+    // 🍅 番茄鐘倒數模式
+    radioClockDigits.textContent = formatPomodoroTime(radioState.pomodoro.remainingSeconds);
     radioClockDigits.classList.add('countdown-mode');
-    clockModeLabel.textContent = 'COUNTDOWN TIMER';
+    clockModeLabel.textContent = 'POMODORO CLOCK (番茄鐘)';
+    if (clockStatusBadge) {
+      clockStatusBadge.textContent = radioState.pomodoro.isRunning ? '● FOCUSING' : '⏸ PAUSED';
+      clockStatusBadge.style.color = radioState.pomodoro.isRunning ? '#00f0ff' : '#ff99cc';
+    }
     tabClockTime.classList.remove('active');
     tabClockCountdown.classList.add('active');
+    if (pomodoroPanel) pomodoroPanel.style.display = 'flex';
   }
 }
 
-// 觸發：換成倒計時（觸發專注倒數反應，情緒文字停留 1.2 秒）
-function triggerCountdownReaction() {
+// 觸發：換成倒計時 / 番茄鐘（觸發慌張焦慮反應，情緒文字停留 1.5 秒）
+function triggerCountdownReaction(shouldStartImmediately = false) {
   radioState.clockMode = 'countdown';
   updateRadioClock();
 
   characterStage.className = 'character-stage panic';
   const line = getRandomDialogue('countdown_panic');
-  typeDialogue(line, '⏳ 專注倒數', { emoji: '⏳', text: '專注倒數 (Timer)' });
-  resetMoodToNormal(1200);
-  showToast("⏳ 已切換為倒計時模式！");
+  typeDialogue(line, '⚡ 慌張焦慮', { emoji: '⚡', text: '慌張焦慮 (Panic)' });
+  resetMoodToNormal(1500);
+  showToast("⏳ 已切換為番茄鐘模式！（角色陷入恐慌）");
+
+  if (shouldStartImmediately && !radioState.pomodoro.isRunning) {
+    togglePomodoroTimer();
+  }
 }
 
 // 觸發：切換回看時間模式
@@ -1447,12 +1486,101 @@ function triggerTimeMode() {
   const curPers = PERSONALITIES[radioState.personalityIndex];
   typeDialogue(
     radioState.gender === 'girl' 
-      ? '呼…切回現在時間了呢…看著時間慢慢流淌，心情也跟著放鬆下來了呢…♡' 
-      : '…切回常規時鐘了嗎？很好。順其自然的時間流動，最適合配這段音樂。',
+      ? '呼…切回現在時間了呢…只要不是倒計時要離開我，時間怎麼走都可以喔…♡' 
+      : '…切回常規時間了嗎？很好。那種數字一直在減少的感覺，真的很令人窒息。',
     '安心陪伴'
   );
   resetMoodToNormal(1200);
   showToast("🕒 已切換為看時間模式。");
+}
+
+// 🍅 番茄鐘計時器控制（開始 / 暫停）
+function togglePomodoroTimer() {
+  if (radioState.pomodoro.isRunning) {
+    // 暫停
+    radioState.pomodoro.isRunning = false;
+    if (radioState.pomodoro.timerId) {
+      clearInterval(radioState.pomodoro.timerId);
+      radioState.pomodoro.timerId = null;
+    }
+    pomoStartPauseBtn.textContent = '▶ 繼續專注';
+    updateRadioClock();
+    const line = radioState.gender === 'girl' 
+      ? '呼…暫停了呢…時間停下來了對不對？只要時間不走，你就不會走…♡' 
+      : '…暫停了嗎？太好了。看著秒針跳動的感覺真的讓人心煩意亂。';
+    typeDialogue(line, '安心陪伴');
+    resetMoodToNormal(1200);
+    showToast("⏸ 番茄鐘已暫停。");
+  } else {
+    // 開始
+    if (radioState.pomodoro.remainingSeconds <= 0) {
+      radioState.pomodoro.remainingSeconds = radioState.pomodoro.durationSeconds;
+    }
+    radioState.pomodoro.isRunning = true;
+    pomoStartPauseBtn.textContent = '⏸ 暫停專注';
+    updateRadioClock();
+
+    characterStage.className = 'character-stage panic';
+    const line = getRandomDialogue('countdown_panic');
+    typeDialogue(line, '⚡ 慌張焦慮', { emoji: '⚡', text: '慌張焦慮 (Panic)' });
+    resetMoodToNormal(1500);
+    showToast(`🍅 番茄鐘開始倒數！剩餘 ${Math.ceil(radioState.pomodoro.remainingSeconds / 60)} 分鐘`);
+
+    radioState.pomodoro.timerId = setInterval(() => {
+      radioState.pomodoro.remainingSeconds--;
+      if (radioState.pomodoro.remainingSeconds <= 0) {
+        // 番茄鐘結束（歸零）
+        clearInterval(radioState.pomodoro.timerId);
+        radioState.pomodoro.timerId = null;
+        radioState.pomodoro.isRunning = false;
+        radioState.pomodoro.remainingSeconds = 0;
+        pomoStartPauseBtn.textContent = '▶ 開始專注';
+        updateRadioClock();
+
+        // 觸發角色極度恐慌崩潰
+        characterStage.className = 'character-stage panic';
+        const endLine = getRandomDialogue('countdown_ended');
+        typeDialogue(endLine, '⚡ 恐慌崩潰', { emoji: '⚡', text: '恐慌崩潰 (End)' });
+        resetMoodToNormal(2200);
+        showToast("🔔 🍅 番茄鐘時間到！專注達成，真昼正哭著抓住你的衣角！");
+      } else {
+        if (radioState.clockMode === 'countdown') {
+          updateRadioClock();
+        }
+      }
+    }, 1000);
+  }
+}
+
+// 🍅 重置番茄鐘
+function resetPomodoroTimer() {
+  if (radioState.pomodoro.timerId) {
+    clearInterval(radioState.pomodoro.timerId);
+    radioState.pomodoro.timerId = null;
+  }
+  radioState.pomodoro.isRunning = false;
+  radioState.pomodoro.remainingSeconds = radioState.pomodoro.durationSeconds;
+  pomoStartPauseBtn.textContent = '▶ 開始專注';
+  updateRadioClock();
+  showToast("↺ 番茄鐘已重置。");
+}
+
+// 🍅 設定番茄鐘分鐘數
+function setPomodoroMinutes(minutes) {
+  radioState.pomodoro.durationSeconds = minutes * 60;
+  radioState.pomodoro.remainingSeconds = minutes * 60;
+  if (radioState.pomodoro.timerId) {
+    clearInterval(radioState.pomodoro.timerId);
+    radioState.pomodoro.timerId = null;
+    radioState.pomodoro.isRunning = false;
+  }
+  pomoStartPauseBtn.textContent = '▶ 開始專注';
+  updateRadioClock();
+
+  pomoPresetBtns.forEach(btn => {
+    btn.classList.toggle('active', parseInt(btn.dataset.minutes) === minutes);
+  });
+  showToast(`🍅 已設定番茄鐘時長為 ${minutes} 分鐘。`);
 }
 
 // 觸發：點擊角色互動（摸摸戳戳，害羞文字停留 1.2 秒）
@@ -1466,14 +1594,14 @@ characterStage.addEventListener('click', () => {
   resetMoodToNormal(1200);
 });
 
-// 觸發：切換人格/心情（心情轉變文字停留 1.2 秒後進入新人格）
+// 觸發：切換人格/心情（害怕文字停留 1.2 秒後進入新人格）
 switchPersonalityBtn.addEventListener('click', () => {
   radioState.personalityIndex = (radioState.personalityIndex + 1) % PERSONALITIES.length;
   const newPers = PERSONALITIES[radioState.personalityIndex];
 
   characterStage.className = 'character-stage fear';
   const line = getRandomDialogue('personality_scared');
-  typeDialogue(line, '✨ 心情轉變', { emoji: '✨', text: '心境調整 (Shift)' });
+  typeDialogue(line, '💔 害怕恐懼', { emoji: '💔', text: '恐懼被重置 (Fear)' });
 
   if (radioState.moodTimeout) clearTimeout(radioState.moodTimeout);
   radioState.moodTimeout = setTimeout(() => {
@@ -1497,7 +1625,7 @@ switchPersonalityBtn.addEventListener('click', () => {
 comfortCharBtn.addEventListener('click', () => {
   characterStage.className = 'character-stage';
   const line = getRandomDialogue('comfort');
-  typeDialogue(line, '🌸 溫暖陪伴', { emoji: '🌸', text: '溫柔安撫 (Comforted)' });
+  typeDialogue(line, '🌸 安心被愛', { emoji: '🌸', text: '安心被愛 (Comforted)' });
   resetMoodToNormal(1500);
   showToast("🥺 已送出溫柔安撫言語！");
 });
@@ -1520,8 +1648,8 @@ toggleGenderBtn.addEventListener('click', () => {
   speakerAvatarIcon.textContent = radioState.gender === 'girl' ? '🎀' : '💀';
 
   const intro = radioState.gender === 'girl' 
-    ? '我是真昼喔…今晚就由我來陪伴你，一起沉浸在每首動人的旋律裡吧♡' 
-    : '…我是夜宵。找個舒服的姿勢坐下，一起聽歌吧。';
+    ? '我是真昼喔…從現在開始，你眼裡只准看著我一個人…明白了嗎？♡' 
+    : '…我是夜宵。別隨便盯著我看…坐下來一起聽歌吧。';
   typeDialogue(intro, '初次見面');
   resetMoodToNormal(1200);
   showToast(`🎀 已切換陪伴角色為：${radioState.gender === 'girl' ? '地雷系少女 真昼' : '地雷系少年 夜宵'}`);
@@ -1539,13 +1667,51 @@ charNextMusicBtn.addEventListener('click', () => {
   resetMoodToNormal(1200);
 });
 
+// 🍅 番茄鐘預設時長按鈕點擊
+pomoPresetBtns.forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const min = parseInt(btn.dataset.minutes, 10);
+    setPomodoroMinutes(min);
+  });
+});
+
+// 🍅 番茄鐘開始 / 暫停按鈕
+pomoStartPauseBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  togglePomodoroTimer();
+});
+
+// 🍅 番茄鐘重置按鈕
+pomoResetBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  resetPomodoroTimer();
+});
+
+// 🍅 +5m 按鈕
+pomoPlus5Btn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  radioState.pomodoro.remainingSeconds += 300;
+  radioState.pomodoro.durationSeconds = Math.max(radioState.pomodoro.durationSeconds, radioState.pomodoro.remainingSeconds);
+  updateRadioClock();
+});
+
+// 🍅 -5m 按鈕
+pomoMinus5Btn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  radioState.pomodoro.remainingSeconds = Math.max(60, radioState.pomodoro.remainingSeconds - 300);
+  updateRadioClock();
+});
+
 // 倒計時反應按鈕
 triggerCountdownReactionBtn.addEventListener('click', () => {
-  triggerCountdownReaction();
+  triggerCountdownReaction(true);
 });
 
 // 時鐘卡片點擊切換
 radioClockWidget.addEventListener('click', (e) => {
+  if (e.target.closest('#pomodoroPanel')) return;
+
   if (e.target.id === 'tabClockTime') {
     triggerTimeMode();
   } else if (e.target.id === 'tabClockCountdown') {
