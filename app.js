@@ -1356,9 +1356,11 @@ function typeDialogue(text, emotionText, moodBadgeOverride) {
   if (moodBadgeOverride) {
     charMoodEmoji.textContent = moodBadgeOverride.emoji;
     charMoodText.textContent = moodBadgeOverride.text;
+    characterMoodBadge.classList.add('visible'); // 浮現反應標籤
   } else {
     charMoodEmoji.textContent = curPers.emoji;
     charMoodText.textContent = `${curPers.name} (${curPers.code})`;
+    characterMoodBadge.classList.remove('visible'); // 平常保持隱藏，不擋住畫面
   }
 
   dialogueContent.textContent = '';
@@ -1381,8 +1383,8 @@ function getRandomDialogue(category) {
   return pool[Math.floor(Math.random() * pool.length)];
 }
 
-// 恢復正常心情狀態 (情緒轉換文字短暫停留 1.2 秒後即平滑回復)
-function resetMoodToNormal(delay = 1200) {
+// 恢復正常心情狀態 (情緒轉換文字與浮動標籤短暫停留後自動隱藏，完全露出背景人像)
+function resetMoodToNormal(delay = 1500) {
   if (radioState.moodTimeout) clearTimeout(radioState.moodTimeout);
   radioState.moodTimeout = setTimeout(() => {
     characterStage.className = 'character-stage';
@@ -1391,6 +1393,8 @@ function resetMoodToNormal(delay = 1200) {
     charMoodText.textContent = `${curPers.name} (${curPers.code})`;
     radioCurrentEmotionText.textContent = '平靜陪伴';
     radioCurrentEmotionText.classList.remove('flash');
+    // 🌟 播完後反應標籤徹底淡出消失，絕不擋住畫面
+    characterMoodBadge.classList.remove('visible');
   }, delay);
 }
 
